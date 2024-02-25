@@ -1,13 +1,13 @@
 # Projeto da disciplina de Desenvolvimento Desktop - 2023/1 (<span><strong>&#10003;</strong></span>)
 
 ## Estudo de caso 1: Vem no X1
-Jogadores (nome, login, senha e data de nascimento) cadastrados no sistema
-Cada carta possui 3 atributos (força, inteligência e velocidade), com valores de 1 a 5 estrelas
-Em cada partida o jogador e a CPU receberão 3 cartas cada, sorteadas e distintas
-Jogador inicia a rodada escolhendo a carta e o atributo que será usado
-CPU responde com outra carta
-Caso o atributo escolhido seja igual em ambas as cartas, jogador escolhe o atributo seguinte para desempate
-Vence quem ganhar 2 dos 3 duelos
+* Jogadores (nome, login, senha e data de nascimento) cadastrados no sistema
+* Cada carta possui 3 atributos (força, inteligência e velocidade), com valores de 1 a 5 estrelas
+* Em cada partida o jogador e a CPU receberão 3 cartas cada, sorteadas e distintas
+* Jogador inicia a rodada escolhendo a carta e o atributo que será usado
+* CPU responde com outra carta
+* Caso o atributo escolhido seja igual em ambas as cartas, jogador escolhe o atributo seguinte para desempate
+* Vence quem ganhar 2 dos 3 duelos
 
 ### O sistema deve:
 1. Cadastrar jogadores
