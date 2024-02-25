@@ -7,7 +7,7 @@
 * Jogador inicia a rodada escolhendo a carta e o atributo que será usado
 * CPU responde com outra carta
 * Caso o atributo escolhido seja igual em ambas as cartas, jogador escolhe o atributo seguinte para desempate
-* Vence quem ganhar 2 dos 3 duelos
+* Vence quem ganhar mais duelos
 
 ### O sistema deve:
 1. Cadastrar jogadores
