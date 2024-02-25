@@ -1,4 +1,4 @@
-# Projeto da disciplina de Desenvolvimento Desktop - 2023/1
+# Projeto da disciplina de Desenvolvimento Desktop - 2023/1 (<span><strong>&#10003;</strong></span>)
 
 ## Estudo de caso 1: Vem no X1
 Jogadores (nome, login, senha e data de nascimento) cadastrados no sistema
@@ -25,7 +25,7 @@ Vence quem ganhar 2 dos 3 duelos
 
 ###### Entidades
 ###### Repositórios / Data Access Objects (DAOs)
-###### Todo Repository deve conter os seguintes métodos: 
+###### Cada classe Repository deve conter os seguintes métodos: 
 * inserir(Entidade novoObjeto)
 * atualizar(Entidade objetoParaAtualizar)
 * excluir(int id)
@@ -33,35 +33,27 @@ Vence quem ganhar 2 dos 3 duelos
 * consultarTodos()
 * consultarComSeletor(Seletor seletor)
 
-1. PessoaRepository (<span><strong>&#10003;</strong></span>)
-2. PartidaRepository (<span><strong>&#10003;</strong></span>)
-3. CartaRepository (<span><strong>&#10003;</strong></span>)
+1. PessoaRepository 
+2. PartidaRepository 
+3. CartaRepository
 
 ###### Services / Business Objects (BOs)
 * Classes que encapsulam as **regras de negócio** do sistema
 
 1. PessoaService: (i) não permitir cadastro com login repetido
-
 2. PartidaService:  (i) toda partida deve possuir 1 jogador, 3 cartas para o jogador e 3 cartas para a CPU (todas distintas)
-
 3. CartaService: (i) ao cadastrar/editar uma carta, o somatório dos pontos dos 3 atributos (força, inteligência e velocidade) deve ser menor ou igual a 10
 
 ### Camada Controller
 ##### Classes responsáveis por: 
 
 * Receber dados ou objetos da camada de view
-
 * Realizar validações
-
 * Controlar o fluxo de telas
-
 * Chamar a camada de model para persistências ou consultas de dados
-
 * Classes Controller, Service ou Servlet (varia conforme a arquitetura)
 
 
 1. PessoaController: validar campos obrigatórios antes de inserir/atualizar
-
 2. CartaController: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
-
 3. PartidaController: validar campos obrigatórios antes de inserir/atualizar
