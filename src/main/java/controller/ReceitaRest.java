@@ -11,8 +11,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.bo.ReceitaBO;
-import model.vo.ReceitaVO;
+import model.entity.senhorfinancas.ReceitaVO;
+import service.ReceitaBO;
 
 @Path("/receita")
 public class ReceitaRest {

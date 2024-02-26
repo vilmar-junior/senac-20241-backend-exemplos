@@ -1,9 +1,9 @@
-package model.bo;
+package service;
 
 import java.util.List;
 
-import model.dao.DespesaDAO;
-import model.vo.DespesaVO;
+import model.entity.senhorfinancas.DespesaVO;
+import model.repository.senhorfinancas.DespesaDAO;
 
 public class DespesaBO {
 	

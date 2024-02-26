@@ -1,9 +1,9 @@
-package model.bo;
+package service;
 
 import java.util.List;
 
-import model.dao.ReceitaDAO;
-import model.vo.ReceitaVO;
+import model.entity.senhorfinancas.ReceitaVO;
+import model.repository.senhorfinancas.ReceitaDAO;
 
 public class ReceitaBO {
 	

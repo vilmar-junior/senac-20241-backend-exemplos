@@ -11,8 +11,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.bo.UsuarioBO;
-import model.vo.UsuarioVO;
+import model.entity.senhorfinancas.UsuarioVO;
+import service.UsuarioBO;
 
 @Path("/usuario")
 public class UsuarioRest {

@@ -11,8 +11,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.bo.DespesaBO;
-import model.vo.DespesaVO;
+import model.entity.senhorfinancas.DespesaVO;
+import service.DespesaBO;
 
 @Path("/despesa")
 public class DespesaRest {

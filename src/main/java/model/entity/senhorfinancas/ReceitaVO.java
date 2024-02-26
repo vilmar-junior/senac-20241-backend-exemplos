@@ -1,4 +1,4 @@
-package model.vo;
+package model.entity.senhorfinancas;
 
 import java.time.LocalDateTime;
 

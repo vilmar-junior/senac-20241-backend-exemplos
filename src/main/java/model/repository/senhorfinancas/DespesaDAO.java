@@ -1,4 +1,4 @@
-package model.dao;
+package model.repository.senhorfinancas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.vo.DespesaVO;
+import model.entity.senhorfinancas.DespesaVO;
+import model.repository.Banco;
 
 public class DespesaDAO {
 

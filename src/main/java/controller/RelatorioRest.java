@@ -7,8 +7,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.bo.RelatorioBO;
 import model.dto.ItemRelatorioDTO;
+import service.RelatorioBO;
 
 @Path("/relatorio")
 public class RelatorioRest {

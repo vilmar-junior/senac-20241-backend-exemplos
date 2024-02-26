@@ -1,9 +1,9 @@
-package model.bo;
+package service;
 
 import java.util.List;
 
-import model.dao.UsuarioDAO;
-import model.vo.UsuarioVO;
+import model.entity.senhorfinancas.UsuarioVO;
+import model.repository.senhorfinancas.UsuarioDAO;
 
 public class UsuarioBO {
 

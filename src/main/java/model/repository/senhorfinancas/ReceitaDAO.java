@@ -1,4 +1,4 @@
-package model.dao;
+package model.repository.senhorfinancas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import model.repository.Banco;
 
-import model.vo.ReceitaVO;
+import model.entity.senhorfinancas.ReceitaVO;
 
 public class ReceitaDAO {
 
