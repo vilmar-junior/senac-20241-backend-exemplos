@@ -7,6 +7,7 @@
 * Jogador inicia a rodada escolhendo a carta e o atributo que será usado
 * CPU responde com outra carta
 * Caso o atributo escolhido seja igual em ambas as cartas, jogador escolhe o atributo seguinte para desempate
+* Cada round deve ter um atributo distinto escolhido
 * Vence quem ganhar mais duelos
 
 ### O sistema deve:
@@ -19,7 +20,7 @@
 ### Camada Model
 ###### Modelagem E-R
 
-1. Tabela PESSOA: ID(PK), NOME, LOGIN, PERCENTUAL_VITORIAS, TOTAL_PARTIDAS, DATA_NASCIMENTO 
+1. Tabela JOGADOR: ID(PK), NOME, LOGIN, PERCENTUAL_VITORIAS, TOTAL_PARTIDAS, DATA_NASCIMENTO 
 2. Tabela PARTIDA: ID(PK), ID_JOGADOR(FK), ROUNDS_VENCIDOS_JOGADOR, ROUNDS_VENCIDOS_CPU, ROUNDS_EMPATADOS, RESULTADO, DATA 
 3. Tabela CARTA: ID(PK), NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO
 
@@ -33,14 +34,14 @@
 * consultarTodos()
 * consultarComSeletor(Seletor seletor)
 
-1. PessoaRepository 
+1. JogadorRepository 
 2. PartidaRepository 
 3. CartaRepository
 
 ###### Services / Business Objects (BOs)
 * Classes que encapsulam as **regras de negócio** do sistema
 
-1. PessoaService: (i) não permitir cadastro com login repetido
+1. JogadorService: (i) não permitir cadastro com login repetido
 2. PartidaService:  (i) toda partida deve possuir 1 jogador, 3 cartas para o jogador e 3 cartas para a CPU (todas distintas)
 3. CartaService: (i) ao cadastrar/editar uma carta, o somatório dos pontos dos 3 atributos (força, inteligência e velocidade) deve ser menor ou igual a 10
 
@@ -54,6 +55,6 @@
 * Classes Controller, Service ou Servlet (varia conforme a arquitetura)
 
 
-1. PessoaController: validar campos obrigatórios antes de inserir/atualizar
+1. JogadorController: validar campos obrigatórios antes de inserir/atualizar
 2. CartaController: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
 3. PartidaController: validar campos obrigatórios antes de inserir/atualizar
