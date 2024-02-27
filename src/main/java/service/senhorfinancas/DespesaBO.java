@@ -1,4 +1,4 @@
-package service;
+package service.senhorfinancas;
 
 import java.util.List;
 

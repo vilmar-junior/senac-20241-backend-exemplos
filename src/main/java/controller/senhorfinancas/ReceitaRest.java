@@ -1,4 +1,4 @@
-package controller;
+package controller.senhorfinancas;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.senhorfinancas.ReceitaVO;
-import service.ReceitaBO;
+import service.senhorfinancas.ReceitaBO;
 
 @Path("/receita")
 public class ReceitaRest {

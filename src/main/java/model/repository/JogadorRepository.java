@@ -2,7 +2,7 @@ package model.repository;
 
 import java.util.ArrayList;
 
-import model.entity.Jogador;
+import model.entity.vemnox1.Jogador;
 
 public class JogadorRepository implements BaseRepository<Jogador> {
 

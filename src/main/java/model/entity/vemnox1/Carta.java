@@ -1,4 +1,4 @@
-package model.entity;
+package model.entity.vemnox1;
 
 import java.time.LocalDate;
 

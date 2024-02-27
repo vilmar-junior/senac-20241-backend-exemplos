@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import model.repository.Banco;
 
-import model.dto.ItemRelatorioDTO;
+import model.dto.senhorfinancas.ItemRelatorioDTO;
 
 public class RelatorioDAO {
 	

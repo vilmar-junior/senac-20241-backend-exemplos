@@ -1,4 +1,4 @@
-package model.entity.enums;
+package model.entity.enums.vemnox1;
 
 public enum Resultado {
 	VITORIA_CPU,

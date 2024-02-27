@@ -1,8 +1,8 @@
-package service;
+package service.senhorfinancas;
 
 import java.util.List;
 
-import model.dto.ItemRelatorioDTO;
+import model.dto.senhorfinancas.ItemRelatorioDTO;
 import model.repository.senhorfinancas.RelatorioDAO;
 
 public class RelatorioBO {

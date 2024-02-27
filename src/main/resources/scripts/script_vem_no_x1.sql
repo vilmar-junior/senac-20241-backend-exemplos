@@ -1,0 +1,50 @@
+create schema if not EXISTS EXEMPLOS;
+
+use EXEMPLOS;
+
+CREATE table if not EXISTS exemplos.CARTA (
+	ID INTEGER auto_increment NOT NULL,
+	NOME varchar(255) NULL,
+	FORCA INTEGER NULL,
+	INTELIGENCIA INTEGER NOT NULL,
+	VELOCIDADE INTEGER NOT NULL,
+	DATA_CADASTRO DATE NULL,
+	CONSTRAINT CARTA_pk PRIMARY KEY (ID)
+);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Popó', 5, 2, 2);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Rocky', 3, 5, 2);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Ronaldinho Gaúcho', 2, 5, 3);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Severino', 4, 1, 1);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Iron Man', 3, 4, 2);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Batman', 5, 5, 5);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Superman', 5, 2, 4);
+
+INSERT INTO exemplos.carta
+(NOME, FORCA, INTELIGENCIA, VELOCIDADE)
+VALUES('Flash', 1, 3, 5);
+
+-- Exemplo de sorteio de 6 cartas aleatórias
+select * from exemplos.carta
+order by rand() 
+limit 6

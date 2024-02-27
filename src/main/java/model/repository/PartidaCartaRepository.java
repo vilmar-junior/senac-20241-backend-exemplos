@@ -2,7 +2,7 @@ package model.repository;
 
 import java.util.ArrayList;
 
-import model.entity.PartidaCarta;
+import model.entity.vemnox1.PartidaCarta;
 
 public class PartidaCartaRepository implements BaseRepository<PartidaCarta> {
 

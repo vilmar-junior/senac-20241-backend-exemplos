@@ -9,8 +9,8 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.entity.Carta;
-import model.entity.Partida;
+import model.entity.vemnox1.Carta;
+import model.entity.vemnox1.Partida;
 
 public class CartaRepository implements BaseRepository<Carta> {
 	

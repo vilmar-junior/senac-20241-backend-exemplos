@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import model.entity.Partida;
+import model.entity.vemnox1.Partida;
 
 public class PartidaRepository implements BaseRepository<Partida> {
 

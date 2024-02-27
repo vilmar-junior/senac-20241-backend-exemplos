@@ -1,4 +1,4 @@
-package controller;
+package controller.senhorfinancas;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.dto.ItemRelatorioDTO;
-import service.RelatorioBO;
+import model.dto.senhorfinancas.ItemRelatorioDTO;
+import service.senhorfinancas.RelatorioBO;
 
 @Path("/relatorio")
 public class RelatorioRest {

@@ -1,10 +1,10 @@
-package model.entity;
+package model.entity.vemnox1;
 
 
 import java.util.Calendar;
 import java.util.List;
 
-import model.entity.enums.Resultado;
+import model.entity.enums.vemnox1.Resultado;
 
 public class Partida {
 
