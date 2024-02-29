@@ -1,7 +1,7 @@
 package model.entity.vemnox1;
 
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import model.entity.enums.vemnox1.Resultado;
@@ -10,13 +10,13 @@ public class Partida {
 
 	private int id;
 	private Jogador jogador;
-	private List<PartidaCarta> cartasJogador;
-	private List<PartidaCarta> cartasCpu;
+	private List<CartaNaPartida> cartasJogador;
+	private List<CartaNaPartida> cartasCpu;
 	private int roundsVencidosJogador;
 	private int roundsVencidosCpu;
 	private int roundsEmpatados;
 	private Resultado resultado;
-	private Calendar data;
+	private LocalDateTime data;
 	private boolean jogouForca;
 	private boolean jogouInteligencia;
 	private boolean jogouVelocidade;
@@ -25,8 +25,8 @@ public class Partida {
 		super();
 	}
 	
-	public Partida(int id, Jogador jogador, List<PartidaCarta> cartasJogador, List<PartidaCarta> cartasCpu,
-			int roundsVencidosJogador, int roundsVencidosCpu, int roundsEmpatados, Resultado resultado, Calendar data,
+	public Partida(int id, Jogador jogador, List<CartaNaPartida> cartasJogador, List<CartaNaPartida> cartasCpu,
+			int roundsVencidosJogador, int roundsVencidosCpu, int roundsEmpatados, Resultado resultado, LocalDateTime data,
 			boolean jogouForca, boolean jogouInteligencia, boolean jogouVelocidade) {
 		super();
 		this.id = id;
@@ -54,16 +54,16 @@ public class Partida {
 	public void setJogador(Jogador jogador) {
 		this.jogador = jogador;
 	}
-	public List<PartidaCarta> getCartasJogador() {
+	public List<CartaNaPartida> getCartasJogador() {
 		return cartasJogador;
 	}
-	public void setCartasJogador(List<PartidaCarta> cartasJogador) {
+	public void setCartasJogador(List<CartaNaPartida> cartasJogador) {
 		this.cartasJogador = cartasJogador;
 	}
-	public List<PartidaCarta> getCartasCpu() {
+	public List<CartaNaPartida> getCartasCpu() {
 		return cartasCpu;
 	}
-	public void setCartasCpu(List<PartidaCarta> cartasCpu) {
+	public void setCartasCpu(List<CartaNaPartida> cartasCpu) {
 		this.cartasCpu = cartasCpu;
 	}
 	public int getRoundsVencidosJogador() {
@@ -90,10 +90,10 @@ public class Partida {
 	public void setResultado(Resultado resultado) {
 		this.resultado = resultado;
 	}
-	public Calendar getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
-	public void setData(Calendar data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 	public boolean isJogouForca() {

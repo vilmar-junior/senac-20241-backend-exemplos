@@ -2,12 +2,12 @@ package model.repository;
 
 import java.util.ArrayList;
 
-import model.entity.vemnox1.PartidaCarta;
+import model.entity.vemnox1.CartaNaPartida;
 
-public class PartidaCartaRepository implements BaseRepository<PartidaCarta> {
+public class PartidaCartaRepository implements BaseRepository<CartaNaPartida> {
 
 	@Override
-	public PartidaCarta salvar(PartidaCarta novaEntidade) {
+	public CartaNaPartida salvar(CartaNaPartida novaEntidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -19,19 +19,19 @@ public class PartidaCartaRepository implements BaseRepository<PartidaCarta> {
 	}
 
 	@Override
-	public boolean alterar(PartidaCarta entidade) {
+	public boolean alterar(CartaNaPartida entidade) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public PartidaCarta consultarPorId(int id) {
+	public CartaNaPartida consultarPorId(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<PartidaCarta> consultarTodos() {
+	public ArrayList<CartaNaPartida> consultarTodos() {
 		// TODO Auto-generated method stub
 		return null;
 	}

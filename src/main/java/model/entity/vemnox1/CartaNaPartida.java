@@ -1,21 +1,20 @@
 package model.entity.vemnox1;
 
-public class PartidaCarta {
+public class CartaNaPartida {
 
 	private int id;
-
-	private Partida partida;
+	private int idPartida;
 	private Carta carta;
 	private boolean pertenceAoJogador;
 	private boolean utilizada;
 
-	public PartidaCarta() {
+	public CartaNaPartida() {
 	}
 
-	public PartidaCarta(int id, Partida partida, Carta carta, boolean pertenceAoJogador, boolean utilizada) {
+	public CartaNaPartida(int id, int idPartida, Carta carta, boolean pertenceAoJogador, boolean utilizada) {
 		super();
 		this.id = id;
-		this.partida = partida;
+		this.idPartida = idPartida;
 		this.carta = carta;
 		this.pertenceAoJogador = pertenceAoJogador;
 		this.utilizada = utilizada;
@@ -29,12 +28,12 @@ public class PartidaCarta {
 		this.id = id;
 	}
 
-	public Partida getPartida() {
-		return partida;
+	public int getIdPartida() {
+		return idPartida;
 	}
 
-	public void setPartida(Partida partida) {
-		this.partida = partida;
+	public void setIdPartida(int idPartida) {
+		this.idPartida = idPartida;
 	}
 
 	public Carta getCarta() {
