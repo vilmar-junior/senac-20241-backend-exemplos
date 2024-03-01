@@ -1,6 +1,6 @@
 package model.entity.vemnox1;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
 public class Jogador {
 
@@ -8,14 +8,14 @@ public class Jogador {
 	private String nome;
 	private String email;
 	//private String senha;
-	private Calendar dataNascimento;
+	private LocalDate dataNascimento;
 	private int totalPartidas;
 	private double percentualVitorias;
 
 	public Jogador() {
 	}
 	
-	public Jogador(int id, String nome, String email, Calendar dataNascimento, int totalPartidas,
+	public Jogador(int id, String nome, String email, LocalDate dataNascimento, int totalPartidas,
 			double percentualVitorias) {
 		super();
 		this.id = id;
@@ -50,11 +50,11 @@ public class Jogador {
 		this.email = email;
 	}
 
-	public Calendar getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Calendar dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

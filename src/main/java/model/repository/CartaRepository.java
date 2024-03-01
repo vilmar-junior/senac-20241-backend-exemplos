@@ -7,8 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+import model.entity.senhorfinancas.DespesaVO;
 import model.entity.vemnox1.Carta;
 import model.entity.vemnox1.Partida;
 
@@ -83,25 +86,110 @@ public class CartaRepository implements BaseRepository<Carta> {
 
 	@Override
 	public boolean excluir(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		boolean excluiu = false;
+		String query = "DELETE FROM carta WHERE id = " + id;
+		try {
+			if(stmt.executeUpdate(query) == 1) {
+				excluiu = true;
+			}
+		} catch (SQLException erro) {
+			System.out.println("Erro ao excluir carta");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return excluiu;
 	}
 
 	@Override
-	public boolean alterar(Carta entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Carta novaCarta) {
+		boolean alterou = false;
+		String query = " UPDATE carta SET nome = ?, forca = ?, inteligencia = ?, "
+				     + "       velocidade = ?, data_cadastro = ? ";
+		Connection conn = Banco.getConnection();
+		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
+		try {
+			pstmt.setString(1, novaCarta.getNome());
+			pstmt.setInt(2, novaCarta.getForca());
+			pstmt.setInt(3, novaCarta.getInteligencia());
+			pstmt.setInt(4, novaCarta.getVelocidade());
+			pstmt.setDate(5, Date.valueOf(novaCarta.getDataCadastro()));
+			
+			alterou = pstmt.executeUpdate(query) == 1;
+		} catch (SQLException erro) {
+			System.out.println("Erro ao atualizar carta");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeStatement(pstmt);
+			Banco.closeConnection(conn);
+		}
+		return alterou;
 	}
 
 	@Override
 	public Carta consultarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		Carta carta = new Carta();
+		String query = " SELECT * FROM carta WHERE id = " + id;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()){
+				carta.setId(Integer.parseInt(resultado.getString("ID")));
+				carta.setForca(resultado.getInt("FORCA"));
+				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
+				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
+				if(resultado.getDate("DATA_CADASTRO") != null) {
+					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
+				}
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao executar consultar carta com id (" + id + ")");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return carta;
 	}
 
 	@Override
 	public ArrayList<Carta> consultarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Carta> cartas = new ArrayList<>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT * FROM carta";
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()){
+				Carta carta = new Carta();
+				carta.setId(Integer.parseInt(resultado.getString("ID")));
+				carta.setForca(resultado.getInt("FORCA"));
+				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
+				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
+				if(resultado.getDate("DATA_CADASTRO") != null) {
+					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
+				}
+				cartas.add(carta);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao executar consultar todas as cartas");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return cartas;
 	}
 }
