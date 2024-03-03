@@ -1,7 +1,6 @@
 package model.entity.vemnox1;
 
 public class CartaNaPartida {
-
 	private int id;
 	private int idPartida;
 	private Carta carta;
@@ -10,7 +9,7 @@ public class CartaNaPartida {
 
 	public CartaNaPartida() {
 	}
-
+	
 	public CartaNaPartida(int id, int idPartida, Carta carta, boolean pertenceAoJogador, boolean utilizada) {
 		super();
 		this.id = id;
