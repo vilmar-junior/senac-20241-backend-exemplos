@@ -1,35 +1,35 @@
 -- CARTAS
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Popó', 5, 2, 2, now());
+VALUES('Popó', 5, 2, 2, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Rocky', 3, 5, 2, now());
+VALUES('Rocky', 3, 5, 2, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Ronaldinho Gaúcho', 2, 5, 3, now());
+VALUES('Ronaldinho Gaúcho', 2, 5, 3, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Severino', 4, 1, 1, now());
+VALUES('Severino', 4, 1, 1, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Iron Man', 3, 4, 2, now());
+VALUES('Iron Man', 3, 4, 2, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Batman', 5, 5, 5, now());
+VALUES('Batman', 5, 5, 5, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Superman', 5, 2, 4, now());
+VALUES('Superman', 5, 2, 4, curdate());
 
 INSERT INTO exemplos.carta
 (NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO)
-VALUES('Flash', 1, 3, 5, now());
+VALUES('Flash', 1, 3, 5, curdate());
 
 -- JOGADORES
 INSERT INTO exemplos.jogador

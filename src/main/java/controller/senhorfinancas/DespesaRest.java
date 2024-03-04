@@ -18,12 +18,21 @@ import service.senhorfinancas.DespesaBO;
 public class DespesaRest {
 	
 	@POST
-	@Path("/cadastrar")
+	//@Path("/")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public DespesaVO cadastrarDespesaController(DespesaVO despesaVO) {
 		DespesaBO despesaBO = new DespesaBO();
 		return despesaBO.cadastrarDespesaBO(despesaVO);
+	}
+	
+	@PUT
+	//@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Boolean atualizarDespesaController(DespesaVO despesaVO) {
+		DespesaBO despesaBO = new DespesaBO();
+		return despesaBO.atualizarDespesaBO(despesaVO);
 	}
 	
 	@GET
@@ -43,14 +52,7 @@ public class DespesaRest {
 		return despesaBO.consultarDespesaBO(idDespesa);
 	}
 	
-	@PUT
-	@Path("/atualizar")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Boolean atualizarDespesaController(DespesaVO despesaVO) {
-		DespesaBO despesaBO = new DespesaBO();
-		return despesaBO.atualizarDespesaBO(despesaVO);
-	}
+
 	
 	@DELETE
 	@Path("/excluir")
