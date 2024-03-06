@@ -1,4 +1,4 @@
-package model.repository;
+package model.repository.vemnox1;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.entity.vemnox1.Jogador;
+import model.repository.Banco;
+import model.repository.BaseRepository;
 
 public class JogadorRepository implements BaseRepository<Jogador> {
 
@@ -64,10 +66,12 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 	@Override
 	public boolean alterar(Jogador novoJogador) {
 		boolean alterou = false;
-		String query = " UPDATE jogador SET nome = ?, email = ?, data_nascimento = ?, "
-				     + "       total_partidas = ?, percentual_vitorias = ? ";
+		String query = " UPDATE jogador "
+					 + " SET   nome=?, email=?, data_nascimento=?, "
+				     + "       total_partidas=?, percentual_vitorias=? "
+				     + " WHERE id=?";
 		Connection conn = Banco.getConnection();
-		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
+		PreparedStatement pstmt = Banco.getPreparedStatement(conn, query);
 		try {
 			//TODO este bloco repete-se no salvar().... refatorar!
 			pstmt.setString(1, novoJogador.getNome());
@@ -76,7 +80,9 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 			pstmt.setInt(4, novoJogador.getTotalPartidas());
 			pstmt.setDouble(5, novoJogador.getPercentualVitorias());
 			
-			alterou = pstmt.executeUpdate(query) == 1;
+			pstmt.setInt(6, novoJogador.getId());
+			
+			alterou = pstmt.executeUpdate() > 0;
 		} catch (SQLException erro) {
 			System.out.println("Erro ao atualizar jogador");
 			System.out.println("Erro: " + erro.getMessage());

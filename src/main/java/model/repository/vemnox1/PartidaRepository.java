@@ -1,4 +1,4 @@
-package model.repository;
+package model.repository.vemnox1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import model.entity.enums.vemnox1.Resultado;
 import model.entity.vemnox1.Partida;
+import model.repository.Banco;
+import model.repository.BaseRepository;
 
 public class PartidaRepository implements BaseRepository<Partida> {
 
@@ -80,7 +82,7 @@ public class PartidaRepository implements BaseRepository<Partida> {
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
 			this.preencherValoresParaInsertOuUpdate(pstmt, partidaParaAtualizar);
-			alterou = pstmt.executeUpdate(query) == 1;
+			alterou = pstmt.executeUpdate() > 0;
 		} catch (SQLException erro) {
 			System.out.println("Erro ao atualizar partida");
 			System.out.println("Erro: " + erro.getMessage());

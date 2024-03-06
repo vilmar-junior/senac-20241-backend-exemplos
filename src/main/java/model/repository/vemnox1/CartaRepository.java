@@ -1,4 +1,4 @@
-package model.repository;
+package model.repository.vemnox1;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import model.entity.senhorfinancas.DespesaVO;
 import model.entity.vemnox1.Carta;
 import model.entity.vemnox1.Partida;
+import model.repository.Banco;
+import model.repository.BaseRepository;
 
 public class CartaRepository implements BaseRepository<Carta> {
 
@@ -108,7 +110,8 @@ public class CartaRepository implements BaseRepository<Carta> {
 	public boolean alterar(Carta novaCarta) {
 		boolean alterou = false;
 		String query = " UPDATE carta SET nome = ?, forca = ?, inteligencia = ?, "
-				     + "       velocidade = ?, data_cadastro = ? ";
+				     + "       velocidade = ?, data_cadastro = ? "
+				     + " WHERE id=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -118,7 +121,8 @@ public class CartaRepository implements BaseRepository<Carta> {
 			pstmt.setInt(4, novaCarta.getVelocidade());
 			pstmt.setDate(5, Date.valueOf(novaCarta.getDataCadastro()));
 			
-			alterou = pstmt.executeUpdate(query) == 1;
+			pstmt.setInt(6, novaCarta.getId());
+			alterou = pstmt.executeUpdate() > 0;
 		} catch (SQLException erro) {
 			System.out.println("Erro ao atualizar carta");
 			System.out.println("Erro: " + erro.getMessage());

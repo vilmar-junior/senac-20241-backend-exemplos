@@ -1,4 +1,4 @@
-# Projeto da disciplina de Desenvolvimento Desktop - 2023/1 (<span><strong>&#10003;</strong></span>)
+# Projeto da disciplina de Desenvolvimento Backend - 2024/1
 
 ## Estudo de caso 1: Vem no X1
 * Jogadores (nome, login, senha e data de nascimento) cadastrados no sistema
@@ -11,18 +11,19 @@
 * Vence quem ganhar mais duelos
 
 ### O sistema deve:
-1. Cadastrar jogadores
-2. Cadastrar cartas, onde o somatório dos 3 atributos não pode exceder 10 estrelas
+1. Cadastrar jogadores <span>&#10003;</span>
+2. Cadastrar cartas, onde o somatório dos 3 atributos não pode exceder 10 estrelas <span>&#10003;</span>
 3. Realizar partidas
 4. Armazenar o histórico das partidas (data, jogador, cartas e resultado)
 
 
-### Camada Model
-###### Modelagem E-R
+### Camada Model (<span><strong>&#10003;</strong></span>)
+###### Modelagem E-R <span>&#10003;</span>
 
-1. Tabela JOGADOR: ID(PK), NOME, LOGIN, PERCENTUAL_VITORIAS, TOTAL_PARTIDAS, DATA_NASCIMENTO 
-2. Tabela PARTIDA: ID(PK), ID_JOGADOR(FK), ROUNDS_VENCIDOS_JOGADOR, ROUNDS_VENCIDOS_CPU, ROUNDS_EMPATADOS, RESULTADO, DATA 
-3. Tabela CARTA: ID(PK), NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO
+1. Tabela JOGADOR <span>&#10003;</span>: ID(PK), NOME, LOGIN, PERCENTUAL_VITORIAS, TOTAL_PARTIDAS, DATA_NASCIMENTO 
+2. Tabela PARTIDA <span>&#10003;</span>: ID(PK), ID_JOGADOR(FK), ROUNDS_VENCIDOS_JOGADOR, ROUNDS_VENCIDOS_CPU, ROUNDS_EMPATADOS, RESULTADO, DATA 
+3. Tabela CARTA <span>&#10003;</span>: ID(PK), NOME, FORCA, INTELIGENCIA, VELOCIDADE, DATA_CADASTRO
+4. Tabela CARTA_PARTIDA:  ID(PK), ID_PARTIDA(FK), ID_CARTA(FK), DO_JOGADOR, UTILIZADA
 
 ###### Entidades
 ###### Repositórios / Data Access Objects (DAOs)
@@ -32,29 +33,29 @@
 * excluir(int id)
 * consultarPorId(int id) 
 * consultarTodos()
-* consultarComSeletor(Seletor seletor)
+* consultarComSeletor(Seletor seletor) - <strong>Versão 2</strong> 
 
-1. JogadorRepository 
-2. PartidaRepository 
-3. CartaRepository
+1. JogadorRepository <span>&#10003;</span>
+2. PartidaRepository <span>&#10003;</span>
+3. CartaRepository <span>&#10003;</span>
+3. CartaPartidaRepository <span>&#10003;</span>
 
 ###### Services / Business Objects (BOs)
 * Classes que encapsulam as **regras de negócio** do sistema
 
 1. JogadorService: (i) não permitir cadastro com login repetido
-2. PartidaService:  (i) toda partida deve possuir 1 jogador, 3 cartas para o jogador e 3 cartas para a CPU (todas distintas)
+2. PartidaService: (i) toda partida deve possuir 1 jogador, 3 cartas para o jogador e 3 cartas para a CPU (todas distintas)
 3. CartaService: (i) ao cadastrar/editar uma carta, o somatório dos pontos dos 3 atributos (força, inteligência e velocidade) deve ser menor ou igual a 10
 
 ### Camada Controller
 ##### Classes responsáveis por: 
 
-* Receber dados ou objetos da camada de view
+* Receber dados ou objetos da camada View
 * Realizar validações
 * Controlar o fluxo de telas
 * Chamar a camada de model para persistências ou consultas de dados
 * Classes Controller, Service ou Servlet (varia conforme a arquitetura)
 
-
-1. JogadorController: validar campos obrigatórios antes de inserir/atualizar
+1. JogadorController: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
 2. CartaController: validar campos obrigatórios antes de inserir/atualizar (<span><strong>&#10003;</strong></span>)
 3. PartidaController: validar campos obrigatórios antes de inserir/atualizar
