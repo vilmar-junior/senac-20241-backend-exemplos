@@ -12,17 +12,19 @@ import jakarta.ws.rs.core.MediaType;
 import model.dto.vemnox1.JogadaDTO;
 import model.dto.vemnox1.PartidaDTO;
 import model.entity.vemnox1.Partida;
+import service.vemnox1.PartidaService;
 
 @Path("/partida")
 public class PartidaController {
+
+	private PartidaService service = new PartidaService();
 	
-	@Path("/iniciar")
+	@Path("/iniciar/{idJogador}")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PartidaDTO iniciarPartida(@PathParam("id") int id){
-		//TODO chamar o PartidaService
-		return null;
+	public PartidaDTO iniciarPartida(@PathParam("idJogador") int idJogador){
+		return service.iniciarPartida(idJogador);
 	}
 	
 	@Path("/jogar")
@@ -30,8 +32,7 @@ public class PartidaController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public PartidaDTO jogar(JogadaDTO jogada){
-		//TODO chamar o PartidaService
-		return null;
+		return service.jogar(jogada);
 	}
 	
 	@Path("/todas/{id}")

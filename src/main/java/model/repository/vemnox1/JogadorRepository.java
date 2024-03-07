@@ -21,11 +21,7 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
 			//TODO este bloco repete-se no alterar().... refatorar!
-			pstmt.setString(1, novoJogador.getNome());
-			pstmt.setString(2, novoJogador.getEmail());
-			pstmt.setDate(3, Date.valueOf(novoJogador.getDataNascimento()));
-			pstmt.setInt(4, novoJogador.getTotalPartidas());
-			pstmt.setDouble(5, novoJogador.getPercentualVitorias());
+			preencherParametrosParaInsertOuUpdate(pstmt, novoJogador);
 			
 			pstmt.execute();
 			ResultSet resultado = pstmt.getGeneratedKeys();
@@ -41,6 +37,15 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 			Banco.closeConnection(conn);
 		}
 		return novoJogador;
+	}
+
+	private void preencherParametrosParaInsertOuUpdate(PreparedStatement pstmt
+			, Jogador novoJogador) throws SQLException {
+		pstmt.setString(1, novoJogador.getNome());
+		pstmt.setString(2, novoJogador.getEmail());
+		pstmt.setDate(3, Date.valueOf(novoJogador.getDataNascimento()));
+		pstmt.setInt(4, novoJogador.getTotalPartidas());
+		pstmt.setDouble(5, novoJogador.getPercentualVitorias());
 	}
 
 	@Override

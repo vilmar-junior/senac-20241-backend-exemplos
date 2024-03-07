@@ -17,9 +17,11 @@ public class PartidaRepository implements BaseRepository<Partida> {
 
 	@Override
 	public Partida salvar(Partida novaPartida) {
-		String query = " INSERT INTO partida (ROUNDS_VENCIDOS_JOGADOR, ROUNDS_VENCIDOS_CPU, ROUNDS_EMPATADOS, RESULTADO, "
-				     + "                      DATA, FORCA_UTILIZADA, INTELIGENCIA_UTILIZADA, VELOCIDADE_UTILIZADA) "
-				     + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		String query = " INSERT INTO partida (ID_JOGADOR, ROUNDS_VENCIDOS_JOGADOR, ROUNDS_VENCIDOS_CPU, "
+					 + "                      ROUNDS_EMPATADOS, RESULTADO, DATA, FORCA_UTILIZADA, "
+				     + "                      INTELIGENCIA_UTILIZADA, VELOCIDADE_UTILIZADA) "
+				     + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -41,14 +43,15 @@ public class PartidaRepository implements BaseRepository<Partida> {
 	}
 
 	private PreparedStatement preencherValoresParaInsertOuUpdate(PreparedStatement pstmt, Partida partida) throws SQLException {
-		pstmt.setInt(1, partida.getRoundsVencidosJogador());
-		pstmt.setInt(2, partida.getRoundsVencidosCpu());
-		pstmt.setInt(3, partida.getRoundsEmpatados());
-		pstmt.setString(4, partida.getResultado().toString());
-		pstmt.setObject(5, partida.getData());
-		pstmt.setBoolean(6, partida.isJogouForca());
-		pstmt.setBoolean(7, partida.isJogouInteligencia());
-		pstmt.setBoolean(8, partida.isJogouVelocidade());
+		pstmt.setInt(1, partida.getJogador().getId());
+		pstmt.setInt(2, partida.getRoundsVencidosJogador());
+		pstmt.setInt(3, partida.getRoundsVencidosCpu());
+		pstmt.setInt(4, partida.getRoundsEmpatados());
+		pstmt.setString(5, partida.getResultado().toString());
+		pstmt.setObject(6, partida.getData());
+		pstmt.setBoolean(7, partida.isJogouForca());
+		pstmt.setBoolean(8, partida.isJogouInteligencia());
+		pstmt.setBoolean(9, partida.isJogouVelocidade());
 		return pstmt;
 	}
 
@@ -76,7 +79,7 @@ public class PartidaRepository implements BaseRepository<Partida> {
 	public boolean alterar(Partida partidaParaAtualizar) {
 		boolean alterou = false;
 		String query = " UPDATE partida SET "
-				     + "   ROUNDS_VENCIDOS_JOGADOR=?, ROUNDS_VENCIDOS_CPU=?, ROUNDS_EMPATADOS=?, RESULTADO=?, "
+				     + "   ID_JOGADOR=?, ROUNDS_VENCIDOS_JOGADOR=?, ROUNDS_VENCIDOS_CPU=?, ROUNDS_EMPATADOS=?, RESULTADO=?, "
 			         + "   DATA=?, FORCA_UTILIZADA=?, INTELIGENCIA_UTILIZADA=?, VELOCIDADE_UTILIZADA=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
@@ -123,9 +126,13 @@ public class PartidaRepository implements BaseRepository<Partida> {
 		Partida p = new Partida();
 		p.setId(Integer.parseInt(resultado.getString("ID")));
 		
-		//TODO como preencher o jogador?
-		//p.setJogador(resultado.getString("NOME"));
+		JogadorRepository jogadorRepository = new JogadorRepository();
+		p.setJogador(jogadorRepository.consultarPorId(resultado.getInt("ID_JOGADOR")));
 
+		CartaPartidaRepository cartaPartidaRepository = new CartaPartidaRepository();
+		p.setCartasCpu(cartaPartidaRepository.consultarPorPartidaETipoJogador(p.getId(), false));
+		p.setCartasJogador(cartaPartidaRepository.consultarPorPartidaETipoJogador(p.getId(), true));
+		
 		p.setRoundsVencidosJogador(resultado.getInt("ROUNDS_VENCIDOS_JOGADOR"));
 		p.setRoundsVencidosCpu(resultado.getInt("ROUNDS_VENCIDOS_CPU")); 
 		p.setRoundsEmpatados(resultado.getInt("ROUNDS_EMPATADOS"));

@@ -13,6 +13,38 @@ import model.repository.BaseRepository;
 
 public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 
+	public ArrayList<CartaNaPartida> consultarPorPartidaETipoJogador(int idPartida, 
+			boolean pertenceAoJogador){
+		ArrayList<CartaNaPartida> cartas = new ArrayList<CartaNaPartida>();
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		CartaNaPartida carta = new CartaNaPartida();
+		String query = " SELECT * FROM carta_partida "
+				     + " WHERE id_partida = " + idPartida
+				     + " AND DO_JOGADOR = " + pertenceAoJogador;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()){
+				carta = converterDoResultSet(resultado);
+				cartas.add(carta);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao executar consultar carta na partida " + idPartida 
+								+ (pertenceAoJogador ? " do jogador" : "da CPU"));
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		
+		return cartas;
+	}
+	
+	
 	@Override
 	public CartaNaPartida salvar(CartaNaPartida novaCartaNaPartida) {
 		String query = " INSERT INTO CARTA_PARTIDA (ID_PARTIDA, ID_CARTA, DO_JOGADOR, UTILIZADA) "

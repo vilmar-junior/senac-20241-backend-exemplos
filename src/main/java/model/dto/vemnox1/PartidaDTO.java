@@ -7,15 +7,19 @@ import model.entity.vemnox1.CartaNaPartida;
 public class PartidaDTO {
 	
 	private int idPartida;
-	private List<CartaNaPartida> cartaJogador;
+	private List<CartaNaPartida> cartasJogador;
 	private List<String> atributosDisponiveis;
 	private String resultadoUltimaJogada;
+	
+	public PartidaDTO() {
+		
+	}
 	
 	public PartidaDTO(int idPartida, List<CartaNaPartida> cartaJogador, List<String> atributosDisponiveis,
 			String resultadoUltimaJogada) {
 		super();
 		this.idPartida = idPartida;
-		this.cartaJogador = cartaJogador;
+		this.cartasJogador = cartaJogador;
 		this.atributosDisponiveis = atributosDisponiveis;
 		this.resultadoUltimaJogada = resultadoUltimaJogada;
 	}
@@ -25,11 +29,11 @@ public class PartidaDTO {
 	public void setIdPartida(int idPartida) {
 		this.idPartida = idPartida;
 	}
-	public List<CartaNaPartida> getCartaJogador() {
-		return cartaJogador;
+	public List<CartaNaPartida> getCartasJogador() {
+		return cartasJogador;
 	}
-	public void setCartaJogador(List<CartaNaPartida> cartaJogador) {
-		this.cartaJogador = cartaJogador;
+	public void setCartasJogador(List<CartaNaPartida> cartasJogador) {
+		this.cartasJogador = cartasJogador;
 	}
 	public List<String> getAtributosDisponiveis() {
 		return atributosDisponiveis;

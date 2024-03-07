@@ -3,13 +3,13 @@ package model.dto.vemnox1;
 public class JogadaDTO {
 	
 	private int idPartida;
-	private int idCartaSelecionada;
+	private int idCartaNaPartidaSelecionada;
 	private String atributoSelecionado;
 	
 	public JogadaDTO(int idPartida, int idCartaSelecionada, String atributoSelecionado) {
 		super();
 		this.idPartida = idPartida;
-		this.idCartaSelecionada = idCartaSelecionada;
+		this.idCartaNaPartidaSelecionada = idCartaSelecionada;
 		this.atributoSelecionado = atributoSelecionado;
 	}
 	public int getIdPartida() {
@@ -18,11 +18,12 @@ public class JogadaDTO {
 	public void setIdPartida(int idPartida) {
 		this.idPartida = idPartida;
 	}
-	public int getIdCartaSelecionada() {
-		return idCartaSelecionada;
+	
+	public int getIdCartaNaPartidaSelecionada() {
+		return idCartaNaPartidaSelecionada;
 	}
-	public void setIdCartaSelecionada(int idCartaSelecionada) {
-		this.idCartaSelecionada = idCartaSelecionada;
+	public void setIdCartaNaPartidaSelecionada(int idCartaNaPartidaSelecionada) {
+		this.idCartaNaPartidaSelecionada = idCartaNaPartidaSelecionada;
 	}
 	public String getAtributoSelecionado() {
 		return atributoSelecionado;

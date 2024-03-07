@@ -53,10 +53,11 @@ public class CartaController {
 		 return service.consultarTodas();
 	}
 	
-	@GET
-	@Path("/sortear")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Carta> sortear(){
-		return service.sortearSeisCartas();
-	}
+	//Apenas para testes
+//	@GET
+//	@Path("/sortear")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public ArrayList<Carta> sortear(){
+//		return service.sortearSeisCartas();
+//	}
 }
