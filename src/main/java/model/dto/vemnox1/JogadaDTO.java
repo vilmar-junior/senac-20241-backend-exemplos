@@ -6,6 +6,10 @@ public class JogadaDTO {
 	private int idCartaNaPartidaSelecionada;
 	private String atributoSelecionado;
 	
+	public JogadaDTO() {
+		
+	}
+	
 	public JogadaDTO(int idPartida, int idCartaSelecionada, String atributoSelecionado) {
 		super();
 		this.idPartida = idPartida;

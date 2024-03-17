@@ -145,6 +145,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 		try{
 			resultado = stmt.executeQuery(query);
 			if(resultado.next()){
+				carta.setNome(resultado.getString("NOME"));
 				carta.setId(Integer.parseInt(resultado.getString("ID")));
 				carta.setForca(resultado.getInt("FORCA"));
 				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));

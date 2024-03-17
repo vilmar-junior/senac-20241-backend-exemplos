@@ -139,11 +139,14 @@ public class PartidaRepository implements BaseRepository<Partida> {
 		p.setResultado(Resultado.valueOf(resultado.getString("RESULTADO")));
 		
 		//Referência: https://www.baeldung.com/java-date-to-localdate-and-localdatetime
-		p.setData(resultado.getDate("DATA").toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+		//TODO arrumar isso
+		//		p.setData(resultado.getDate("DATA").toInstant()
+//			      .atZone(ZoneId.systemDefault())
+//			      .toLocalDateTime());
 		
 		p.setJogouForca(resultado.getBoolean("FORCA_UTILIZADA"));
 		p.setJogouInteligencia(resultado.getBoolean("INTELIGENCIA_UTILIZADA"));
-		p.setJogouVelocidade(resultado.getBoolean(""));
+		p.setJogouVelocidade(resultado.getBoolean("VELOCIDADE_UTILIZADA"));
 
 		return p;
 	}

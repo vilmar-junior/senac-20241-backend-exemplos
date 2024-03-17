@@ -124,13 +124,13 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 		Statement stmt = Banco.getStatement(conn);
 		
 		ResultSet resultado = null;
-		CartaNaPartida partida = new CartaNaPartida();
+		CartaNaPartida cartaNaPartida = new CartaNaPartida();
 		String query = " SELECT * FROM carta_partida WHERE id = " + id;
 		
 		try{
 			resultado = stmt.executeQuery(query);
 			if(resultado.next()){
-				partida = converterDoResultSet(resultado);
+				cartaNaPartida = converterDoResultSet(resultado);
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao executar consultar carta na partida com id (" + id + ")");
@@ -140,7 +140,7 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		return partida;
+		return cartaNaPartida;
 	}
 
 	private CartaNaPartida converterDoResultSet(ResultSet resultado) throws SQLException {
@@ -148,8 +148,8 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 		cartaPartida.setId(Integer.parseInt(resultado.getString("ID")));
 		cartaPartida.setIdPartida(resultado.getInt("ID_PARTIDA"));
 		
-		//TODO como preencher a carta?
-		//p.setCarta(resultado.getInt("ID_CARTA"));
+		CartaRepository cartaRepository = new CartaRepository();
+		cartaPartida.setCarta(cartaRepository.consultarPorId(resultado.getInt("ID_CARTA")));
 
 		cartaPartida.setPertenceAoJogador(resultado.getBoolean("DO_JOGADOR"));
 		cartaPartida.setUtilizada(resultado.getBoolean("UTILIZADA"));

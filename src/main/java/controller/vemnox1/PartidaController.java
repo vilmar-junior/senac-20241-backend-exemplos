@@ -2,6 +2,7 @@ package controller.vemnox1;
 
 import java.util.List;
 
+import exception.VemNoX1Exception;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -31,7 +32,7 @@ public class PartidaController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PartidaDTO jogar(JogadaDTO jogada){
+	public PartidaDTO jogar(JogadaDTO jogada) throws VemNoX1Exception{
 		return service.jogar(jogada);
 	}
 	

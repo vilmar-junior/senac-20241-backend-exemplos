@@ -49,3 +49,6 @@ CREATE table if not EXISTS exemplos.CARTA_PARTIDA (
 	CONSTRAINT ID_PARTIDA foreign key (ID_PARTIDA) references exemplos.PARTIDA(ID),
 	CONSTRAINT ID_CARTA foreign key (ID_CARTA) references exemplos.CARTA(ID)
 );
+
+--V2
+ALTER TABLE exemplos.partida MODIFY COLUMN `DATA` TIMESTAMP NOT NULL;
