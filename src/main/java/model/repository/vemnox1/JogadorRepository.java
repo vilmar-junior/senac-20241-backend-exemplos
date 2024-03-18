@@ -119,7 +119,7 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 				jogador.setPercentualVitorias(resultado.getInt("PERCENTUAL_VITORIAS"));
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar jogador com id (" + id + ")");
+			System.out.println("Erro ao consultar jogador com id (" + id + ")");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -153,7 +153,7 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 				jogadores.add(jogador);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar todas as jogadors");
+			System.out.println("Erro ao consultar todas os jogadores");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

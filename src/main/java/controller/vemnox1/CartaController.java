@@ -30,7 +30,7 @@ public class CartaController {
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
 	public boolean atualizar(Carta cartaEditada) throws VemNoX1Exception {
 		 return service.atualizar(cartaEditada);
 	}

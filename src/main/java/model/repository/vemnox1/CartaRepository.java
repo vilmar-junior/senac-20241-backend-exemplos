@@ -154,7 +154,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 				}
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar carta com id (" + id + ")");
+			System.out.println("Erro ao consultar carta com id (" + id + ")");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -187,7 +187,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 				cartas.add(carta);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar todas as cartas");
+			System.out.println("Erro ao consultar todas as cartas");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

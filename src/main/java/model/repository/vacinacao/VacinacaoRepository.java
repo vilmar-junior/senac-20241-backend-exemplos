@@ -8,13 +8,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import model.entity.vacinacao.Vacina;
 import model.entity.vacinacao.Vacinacao;
-import model.entity.vacinacao.Vacinacao;
-import model.entity.vemnox1.Carta;
 import model.repository.Banco;
 import model.repository.BaseRepository;
-
+	
 public class VacinacaoRepository implements BaseRepository<Vacinacao> {
 
 	@Override
@@ -63,15 +60,62 @@ public class VacinacaoRepository implements BaseRepository<Vacinacao> {
 	}
 
 	@Override
-	public boolean alterar(Vacinacao entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Vacinacao vacinacaoEditada) {
+		// TODO pode alterar tudo na aplicação? Ou apenas a nota?
+		
+		boolean alterou = false;
+		String query = " UPDATE exemplos.aplicacao_vacina "
+					 + " SET id_pessoa=?, id_vacina=?, data_aplicacao=?, avaliacao=? "
+				     + " WHERE id=? ";
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
+		try {
+			stmt.setInt(1, vacinacaoEditada.getIdPessoa());
+			stmt.setInt(2, vacinacaoEditada.getVacina().getId());
+			stmt.setDate(3, Date.valueOf(vacinacaoEditada.getDataAplicacao()));
+			stmt.setInt(4, vacinacaoEditada.getAvaliacao());
+			
+			stmt.setInt(6, vacinacaoEditada.getId());
+			alterou = stmt.executeUpdate() > 0;
+		} catch (SQLException erro) {
+			System.out.println("Erro ao atualizar aplicação de vacina");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return alterou;
 	}
 
 	@Override
 	public Vacinacao consultarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		Vacinacao vacinacao = null;
+		ResultSet resultado = null;
+		String query = " SELECT * FROM apliacao_vacina WHERE id = " + id;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			VacinaRepository vacinaRepository = new VacinaRepository();
+			if(resultado.next()){
+				vacinacao = new Vacinacao();
+				vacinacao.setId(resultado.getInt("ID"));
+				vacinacao.setIdPessoa(resultado.getInt("ID_PESSOA"));
+				vacinacao.setDataAplicacao(resultado.getDate("DATA_APLICACAO").toLocalDate());
+				vacinacao.setAvaliacao(resultado.getInt("AVALIACAO"));
+				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("ID_VACINA")));
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar a aplicação de vacina com o id: " + id);
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return vacinacao;
 	}
 
 	@Override
@@ -90,17 +134,14 @@ public class VacinacaoRepository implements BaseRepository<Vacinacao> {
 				Vacinacao vacinacao = new Vacinacao();
 				vacinacao.setId(resultado.getInt("ID"));
 				vacinacao.setIdPessoa(resultado.getInt("ID_PESSOA"));
-				
-				Vacina vacinaAplicada = vacinaRepository.consultarPorId(resultado.getInt("ID_VACINA"));
-				
-				vacinacao.setVacina(vacinaAplicada);
 				vacinacao.setDataAplicacao(resultado.getDate("DATA_APLICACAO").toLocalDate());
 				vacinacao.setAvaliacao(resultado.getInt("AVALIACAO"));
+				vacinacao.setVacina(vacinaRepository.consultarPorId(resultado.getInt("ID_VACINA")));
 				
 				aplicacoes.add(vacinacao);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar todas as cartas");
+			System.out.println("Erro consultar todas as aplicações de vacinas");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

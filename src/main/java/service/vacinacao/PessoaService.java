@@ -1,5 +1,7 @@
 package service.vacinacao;
 
+import java.util.List;
+
 import exception.VacinacaoException;
 import model.entity.vacinacao.Pessoa;
 import model.repository.vacinacao.PessoaRepository;
@@ -14,6 +16,26 @@ public class PessoaService {
 		validarCpf(novaPessoa);
 		
 		return repository.salvar(novaPessoa);
+	}
+	
+	public boolean atualizar(Pessoa pessoaEditada) throws VacinacaoException {
+		validarCamposObrigatorios(pessoaEditada);
+		
+		//TODO porque não valido o CPF? Veremos em sala
+		
+		return repository.alterar(pessoaEditada);
+	}
+
+	public boolean excluir(int id) {
+		return repository.excluir(id);
+	}
+
+	public Pessoa consultarPorId(int id) {
+		return repository.consultarPorId(id);
+	}
+
+	public List<Pessoa> consultarTodas() {
+		return repository.consultarTodos();
 	}
 	
 	private void validarCpf(Pessoa novaPessoa) throws VacinacaoException {
@@ -43,6 +65,5 @@ public class PessoaService {
 		if(!mensagemValidacao.isEmpty()) {
 			throw new VacinacaoException("Preencha o(s) seguinte(s) campo(s) \n " + mensagemValidacao);
 		}
-		
 	}
 }

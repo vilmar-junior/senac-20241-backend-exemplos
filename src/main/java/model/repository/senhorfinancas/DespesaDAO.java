@@ -53,8 +53,8 @@ public class DespesaDAO {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()){
 				DespesaVO despesa = new DespesaVO();
-				despesa.setIdDespesa(Integer.parseInt(resultado.getString(1)));
-				despesa.setIdUsuario(Integer.parseInt(resultado.getString(2)));
+				despesa.setIdDespesa(resultado.getInt(1));
+				despesa.setIdUsuario(resultado.getInt(2));
 				despesa.setDescricao(resultado.getString(3));
 				despesa.setValor(Double.parseDouble(resultado.getString(4)));
 				despesa.setDataVencimento(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -86,8 +86,8 @@ public class DespesaDAO {
 		try{
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()){
-				despesa.setIdDespesa(Integer.parseInt(resultado.getString(1)));
-				despesa.setIdUsuario(Integer.parseInt(resultado.getString(2)));
+				despesa.setIdDespesa(resultado.getInt(1));
+				despesa.setIdUsuario(resultado.getInt(2));
 				despesa.setDescricao(resultado.getString(3));
 				despesa.setValor(Double.parseDouble(resultado.getString(4)));
 				despesa.setDataVencimento(LocalDateTime.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));

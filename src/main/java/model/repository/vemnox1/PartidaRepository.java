@@ -112,7 +112,7 @@ public class PartidaRepository implements BaseRepository<Partida> {
 				
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar partida com id (" + id + ")");
+			System.out.println("Erro ao consultar partida com id (" + id + ")");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -164,7 +164,7 @@ public class PartidaRepository implements BaseRepository<Partida> {
 				partidas.add(partida);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar todas as partidas");
+			System.out.println("Erro ao consultar todas as partidas");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

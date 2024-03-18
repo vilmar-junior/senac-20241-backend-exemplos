@@ -32,7 +32,7 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 				cartas.add(carta);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar carta na partida " + idPartida 
+			System.out.println("Erro ao consultar carta na partida " + idPartida 
 								+ (pertenceAoJogador ? " do jogador" : "da CPU"));
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
@@ -133,7 +133,7 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 				partida = converterDoResultSet(resultado);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar carta na partida com id (" + id + ")");
+			System.out.println("Erro ao consultar carta na partida com id (" + id + ")");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -173,7 +173,7 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 				partidas.add(partida);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao executar consultar todas as cartas utilizadas em cada partida");
+			System.out.println("Erro ao consultar todas as cartas utilizadas em cada partida");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

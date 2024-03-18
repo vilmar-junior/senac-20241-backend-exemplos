@@ -1,4 +1,4 @@
-package controller.vemnox1;
+package controller.vacinacao;
 
 import java.util.List;
 
@@ -11,28 +11,26 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import model.entity.vemnox1.Jogador;
-import service.vemnox1.JogadorService;
+import model.entity.vacinacao.Vacina;
+import service.vacinacao.VacinaService;
 
-@Path("/jogador")
-public class JogadorController {
+@Path("/vacina")
+public class VacinaController {
 	
-	private JogadorService service = new JogadorService();
+	private VacinaService service = new VacinaService();
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Jogador salvar(Jogador novoJogador){
-		novoJogador.setTotalPartidas(0);
-		novoJogador.setPercentualVitorias(0);
-		return service.salvar(novoJogador);
+	public Vacina salvar(Vacina novaVacina){
+		 return service.salvar(novaVacina);
 	}
 	
 	@PUT
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean atualizar(Jogador jogadorEditado){
-		 return service.atualizar(jogadorEditado);
+	public boolean atualizar(Vacina vacinaEditada){
+		 return service.atualizar(vacinaEditada);
 	}
 	
 	@DELETE
@@ -43,13 +41,13 @@ public class JogadorController {
 	
 	@GET
 	@Path("/{id}")
-	public Jogador consultarPorId(@PathParam("id") int id){
+	public Vacina consultarPorId(@PathParam("id") int id){
 		 return service.consultarPorId(id);
 	}
 	
 	@GET
 	@Path("/todas")
-	public List<Jogador> consultarTodas(){
+	public List<Vacina> consultarTodas(){
 		 return service.consultarTodas();
 	}
 }
