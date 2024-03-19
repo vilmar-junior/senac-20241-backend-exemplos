@@ -22,6 +22,7 @@ public class PartidaService {
 	private static final String FORCA = "Força";
 	private static final String INTELIGENCIA = "Inteligência";
 	private static final String VELOCIDADE = "Velocidade";
+	private static final int MAXIMO_ATRIBUTOS = 15;
 
 	private JogadorRepository jogadorRepository = new JogadorRepository();
 	private PartidaRepository partidaRepository = new PartidaRepository();
@@ -86,8 +87,6 @@ public class PartidaService {
 	}
 
 	public PartidaDTO jogar(JogadaDTO jogada) throws VemNoX1Exception {
-		PartidaDTO partidaAtualizada = new PartidaDTO();
-		
 		Partida partida = partidaRepository.consultarPorId(jogada.getIdPartida());
 		CartaNaPartida cartaSelecionadaPeloJogador = cartaPartidaRepository.consultarPorId(jogada.getIdCartaNaPartidaSelecionada());
 		String atributoSelecionado = jogada.getAtributoSelecionado();
@@ -107,18 +106,10 @@ public class PartidaService {
 			throw new VemNoX1Exception("Atributo selecionado [" + atributoSelecionado + "] já jogado");
 		}
 		
-		CartaNaPartida cartaCpuSelecionada;
-		cartaCpuSelecionada = obterCartaVitoriaCpu(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
-		
-		if(cartaCpuSelecionada == null) {
-			cartaCpuSelecionada = obterCartaEmpate(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
-		}
-		
-		if(cartaCpuSelecionada == null) {
-			cartaCpuSelecionada = obterPiorCartaCpu(cartasCpuDisponiveis, atributoSelecionado);
-		}
+		CartaNaPartida cartaCpuSelecionada = escolherCartaCpu(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
 		
 		int valorAtributoCpu = obterValorAtributo(cartaCpuSelecionada.getCarta(), atributoSelecionado);
+		
 		Resultado resultadoJogada = this.aferirResultadoJogada(valorAtributoCpu, valorAtributoJogador);
 
 		this.marcarCartasComoUsadas(cartaSelecionadaPeloJogador, cartaCpuSelecionada);
@@ -126,13 +117,28 @@ public class PartidaService {
 		this.atualizarPartida(partida);
 		partida = this.partidaRepository.consultarPorId(partida.getId());
 		
-		partidaAtualizada.setResultadoUltimaJogada("Atributo selecionado: " + atributoSelecionado
+		PartidaDTO partidaAtualizada = new PartidaDTO();
+		partidaAtualizada.setResultadoUltimaJogada("Atributo selecionado no X1: " + atributoSelecionado
 				+ " Carta do jogador [" + cartaSelecionadaPeloJogador.getCarta().getNome() + " - " + valorAtributoJogador + "]" 
 				+ " X Carta da CPU [" + cartaSelecionadaPeloJogador.getCarta().getNome() + " - " + valorAtributoCpu + "]" 
 				+ "Resultado da jogada: " + resultadoJogada);
 		partidaAtualizada.setCartasJogador(partida.getCartasJogador());
 		
 		return partidaAtualizada;
+	}
+
+	private CartaNaPartida escolherCartaCpu(List<CartaNaPartida> cartasCpuDisponiveis, String atributoSelecionado, int valorAtributoJogador) {
+		CartaNaPartida cartaCpuSelecionada = obterCartaVitoriaCpu(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
+		
+		if(cartaCpuSelecionada == null) {
+			cartaCpuSelecionada = obterCartaEmpate(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
+		}
+		
+		if(cartaCpuSelecionada == null) {
+			cartaCpuSelecionada = obterPiorCartaCpu(cartasCpuDisponiveis);
+		}
+		
+		return cartaCpuSelecionada;
 	}
 
 	private void atualizarPartida(Partida partida) {
@@ -217,14 +223,16 @@ public class PartidaService {
 		return cartaCpuSelecionada;
 	}
 
-	private CartaNaPartida obterPiorCartaCpu(List<CartaNaPartida> cartasCpuDisponiveis, String atributoSelecionado) {
+	private CartaNaPartida obterPiorCartaCpu(List<CartaNaPartida> cartasCpuDisponiveis) {
 		CartaNaPartida piorCartaCpuSelecionada = null;
-		int piorValorAtributoCpu = 6;
+		int piorTotalCarta = MAXIMO_ATRIBUTOS + 1; //Valor acima do máximo possível
+		
 		for(CartaNaPartida cartaCpu: cartasCpuDisponiveis) {
-			int valorAtributoCpu = obterValorAtributo(cartaCpu.getCarta(), atributoSelecionado);
+			int totalAtributosCartaAtual = cartaCpu.getCarta().getTotalAtributos();
 			
-			if(piorValorAtributoCpu > valorAtributoCpu) {
+			if(totalAtributosCartaAtual < piorTotalCarta) {
 				piorCartaCpuSelecionada = cartaCpu;
+				piorTotalCarta = totalAtributosCartaAtual;
 			}
 		}
 		
