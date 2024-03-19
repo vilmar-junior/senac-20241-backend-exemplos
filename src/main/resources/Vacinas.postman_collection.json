@@ -298,6 +298,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "[Vacinacao] Inserir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idPessoa\" : 2,\r\n    \"vacina\": {\r\n    \"nome\": \"SenacVac\",\r\n        \"paisOrigem\": \"Brasil\",\r\n        \"estagio\": 1,\r\n        \"dataInicioPesquisa\": \"2022-10-10\",\r\n        \"pesquisadorResponsavel\": {\r\n            \"id\": 1\r\n        }\r\n    },\r\n    \"dataAplicacao\": \"2024-03-20\",\r\n    \"avaliacao\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/vacinacao",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"vacinacao"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
