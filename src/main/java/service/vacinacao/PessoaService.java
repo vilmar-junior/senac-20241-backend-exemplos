@@ -61,6 +61,9 @@ public class PessoaService {
 		if(p.getTipo() < 1 || p.getTipo() > 3) {
 			mensagemValidacao += " - informe o tipo (entre 1 e 3)";
 		}
+		if(p.getPaisOrigem() == null) {
+			mensagemValidacao += " - informe o país de origem";
+		}
 		
 		if(!mensagemValidacao.isEmpty()) {
 			throw new VacinacaoException("Preencha o(s) seguinte(s) campo(s) \n " + mensagemValidacao);

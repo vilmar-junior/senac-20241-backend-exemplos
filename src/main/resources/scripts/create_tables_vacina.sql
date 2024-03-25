@@ -28,3 +28,22 @@ CREATE TABLE `vacina` (
   CONSTRAINT `id_pessoa` FOREIGN KEY (`id_pessoa`) REFERENCES `pessoa`(`id`),
   CONSTRAINT `id_vacina` FOREIGN KEY (`id_vacina`) REFERENCES `vacina`(`id`)
  );
+ 
+ -- V2
+ CREATE TABLE exemplos.Pais (
+	id INT auto_increment NOT NULL,
+	Nome varchar(100) NOT NULL,
+	Sigla varchar(2) NOT NULL,
+	CONSTRAINT Pais_pk PRIMARY KEY (id)
+);
+
+ALTER TABLE exemplos.pessoa ADD ID_PAIS INT NULL;
+ALTER TABLE exemplos.pessoa ADD CONSTRAINT pessoa_pais_FK FOREIGN KEY (ID_PAIS) REFERENCES exemplos.pais(id);
+
+alter table vacina add column id_pais int;
+alter table vacina add CONSTRAINT 
+vacina_pais_FK FOREIGN KEY (ID_PAIS) REFERENCES exemplos.pais(id);
+
+
+ 
+ 

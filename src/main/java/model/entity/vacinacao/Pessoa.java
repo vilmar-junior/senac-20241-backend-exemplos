@@ -1,6 +1,7 @@
 package model.entity.vacinacao;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Pessoa {
 	
@@ -10,12 +11,15 @@ public class Pessoa {
 	private char sexo;
 	private LocalDate dataNascimento;
 	private int tipo;
+	private Pais paisOrigem;
+	private ArrayList<Vacinacao> vacinacoes;
+	
 	
 	public Pessoa() {
 		
 	}
 
-	public Pessoa(int id, String nome, String cpf, char sexo, LocalDate dataNascimento, int tipo) {
+	public Pessoa(int id, String nome, String cpf, char sexo, LocalDate dataNascimento, int tipo, Pais pais, ArrayList<Vacinacao> vacinacoes) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -23,6 +27,8 @@ public class Pessoa {
 		this.sexo = sexo;
 		this.dataNascimento = dataNascimento;
 		this.tipo = tipo;
+		this.paisOrigem = pais;
+		this.vacinacoes = vacinacoes;
 	}
 	public int getId() {
 		return id;
@@ -59,5 +65,21 @@ public class Pessoa {
 	}
 	public void setTipo(int tipo) {
 		this.tipo = tipo;
+	}
+
+	public Pais getPaisOrigem() {
+		return paisOrigem;
+	}
+
+	public void setPaisOrigem(Pais paisOrigem) {
+		this.paisOrigem = paisOrigem;
+	}
+
+	public ArrayList<Vacinacao> getVacinacoes() {
+		return vacinacoes;
+	}
+
+	public void setVacinacoes(ArrayList<Vacinacao> vacinacoes) {
+		this.vacinacoes = vacinacoes;
 	}
 }

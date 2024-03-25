@@ -16,8 +16,9 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public Pessoa salvar(Pessoa novaPessoa) {
-		String sql = " INSERT INTO pessoa (nome, cpf, sexo, data_nascimento, tipo) "
-				   + " VALUES(?, ?, ?, ?, ?) ";
+		String sql = " INSERT INTO pessoa (nome, cpf, sexo, id_pais, "
+				   + "		               data_nascimento, tipo) "
+				   + " VALUES(?, ?, ?, ?, ?, ?) ";
 		Connection conexao = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conexao, sql);
 		
@@ -25,8 +26,9 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 			stmt.setString(1, novaPessoa.getNome());
 			stmt.setString(2, novaPessoa.getCpf());
 			stmt.setString(3, novaPessoa.getSexo() + "");
-			stmt.setDate(4, Date.valueOf(novaPessoa.getDataNascimento()));
-			stmt.setInt(5, novaPessoa.getTipo());
+			stmt.setInt(4, novaPessoa.getPaisOrigem().getId());
+			stmt.setDate(5, Date.valueOf(novaPessoa.getDataNascimento()));
+			stmt.setInt(6, novaPessoa.getTipo());
 			
 			stmt.execute();
 			ResultSet resultado = stmt.getGeneratedKeys();
@@ -65,7 +67,8 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 	public boolean alterar(Pessoa pessoaEditada) {
 		boolean alterou = false;
 		String query = " UPDATE exemplos.pessoa "
-				     + " SET nome=?, cpf=?, sexo=?, data_nascimento=?, tipo=? "
+				     + " SET nome=?, cpf=?, sexo=?, id_pais=? "
+				     + " data_nascimento=?, tipo=? "
 				     + " WHERE id=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
@@ -73,10 +76,11 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 			stmt.setString(1, pessoaEditada.getNome());
 			stmt.setString(2, pessoaEditada.getCpf());
 			stmt.setString(3, pessoaEditada.getSexo() + "");
-			stmt.setDate(4, Date.valueOf(pessoaEditada.getDataNascimento()));
-			stmt.setInt(5, pessoaEditada.getTipo());
+			stmt.setInt(4, pessoaEditada.getPaisOrigem().getId());
+			stmt.setDate(5, Date.valueOf(pessoaEditada.getDataNascimento()));
+			stmt.setInt(6, pessoaEditada.getTipo());
 			
-			stmt.setInt(6, pessoaEditada.getId());
+			stmt.setInt(7, pessoaEditada.getId());
 			alterou = stmt.executeUpdate() > 0;
 		} catch (SQLException erro) {
 			System.out.println("Erro ao atualizar pessoa");
@@ -107,6 +111,12 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				pessoa.setSexo(resultado.getString("SEXO").charAt(0));
 				pessoa.setDataNascimento(resultado.getDate("DATA_NASCIMENTO").toLocalDate()); 
 				pessoa.setTipo(resultado.getInt("TIPO"));
+				
+				PaisRepository paisRepository = new PaisRepository();
+				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("ID_PAIS")));
+				
+				VacinacaoRepository vacinacaoRepository = new VacinacaoRepository();
+				pessoa.setVacinacoes(vacinacaoRepository.consultarPorIdPessoa(pessoa.getId()));
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao consultar pessoa com o id: " + id);
@@ -138,6 +148,10 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				pessoa.setSexo(resultado.getString("SEXO").charAt(0));
 				pessoa.setDataNascimento(resultado.getDate("DATA_NASCIMENTO").toLocalDate()); 
 				pessoa.setTipo(resultado.getInt("TIPO"));
+				
+				PaisRepository paisRepository = new PaisRepository();
+				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("ID_PAIS")));
+				
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException erro){
