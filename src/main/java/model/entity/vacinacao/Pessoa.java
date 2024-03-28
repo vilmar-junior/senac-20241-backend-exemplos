@@ -12,14 +12,15 @@ public class Pessoa {
 	private LocalDate dataNascimento;
 	private int tipo;
 	private Pais paisOrigem;
-	private ArrayList<Vacinacao> vacinacoes;
 	
+	//Comentado para evitar confusões durante a prova
+	//private ArrayList<Vacinacao> vacinacoes;
 	
 	public Pessoa() {
 		
 	}
 
-	public Pessoa(int id, String nome, String cpf, char sexo, LocalDate dataNascimento, int tipo, Pais pais, ArrayList<Vacinacao> vacinacoes) {
+	public Pessoa(int id, String nome, String cpf, char sexo, LocalDate dataNascimento, int tipo, Pais pais) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -28,7 +29,7 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 		this.tipo = tipo;
 		this.paisOrigem = pais;
-		this.vacinacoes = vacinacoes;
+		//this.vacinacoes = vacinacoes;
 	}
 	public int getId() {
 		return id;
@@ -75,11 +76,11 @@ public class Pessoa {
 		this.paisOrigem = paisOrigem;
 	}
 
-	public ArrayList<Vacinacao> getVacinacoes() {
-		return vacinacoes;
-	}
-
-	public void setVacinacoes(ArrayList<Vacinacao> vacinacoes) {
-		this.vacinacoes = vacinacoes;
-	}
+//	public ArrayList<Vacinacao> getVacinacoes() {
+//		return vacinacoes;
+//	}
+//
+//	public void setVacinacoes(ArrayList<Vacinacao> vacinacoes) {
+//		this.vacinacoes = vacinacoes;
+//	}
 }

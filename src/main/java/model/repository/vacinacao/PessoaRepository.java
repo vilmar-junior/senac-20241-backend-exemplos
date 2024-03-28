@@ -115,8 +115,9 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				PaisRepository paisRepository = new PaisRepository();
 				pessoa.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("ID_PAIS")));
 				
-				VacinacaoRepository vacinacaoRepository = new VacinacaoRepository();
-				pessoa.setVacinacoes(vacinacaoRepository.consultarPorIdPessoa(pessoa.getId()));
+				//TODO comentado durante a prova para evitar confusões
+				//VacinacaoRepository vacinacaoRepository = new VacinacaoRepository();
+				//pessoa.setVacinacoes(vacinacaoRepository.consultarPorIdPessoa(pessoa.getId()));
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao consultar pessoa com o id: " + id);
