@@ -149,6 +149,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 				carta.setForca(resultado.getInt("FORCA"));
 				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
 				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
+				carta.setNome(resultado.getString("NOME"));
 				if(resultado.getDate("DATA_CADASTRO") != null) {
 					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
 				}
@@ -177,10 +178,11 @@ public class CartaRepository implements BaseRepository<Carta> {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()){
 				Carta carta = new Carta();
-				carta.setId(Integer.parseInt(resultado.getString("ID")));
+				carta.setId(resultado.getInt("ID"));
 				carta.setForca(resultado.getInt("FORCA"));
 				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
 				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
+				carta.setNome(resultado.getString("NOME"));
 				if(resultado.getDate("DATA_CADASTRO") != null) {
 					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
 				}

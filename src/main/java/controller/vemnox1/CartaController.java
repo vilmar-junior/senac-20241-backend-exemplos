@@ -1,6 +1,5 @@
 package controller.vemnox1;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import exception.VemNoX1Exception;
@@ -37,18 +36,21 @@ public class CartaController {
 	
 	@DELETE
 	@Path("/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
 	public boolean excluir(@PathParam("id") int id){
 		 return service.excluir(id);
 	}
 	
 	@GET
 	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Carta consultarPorId(@PathParam("id") int id){
 		 return service.consultarPorId(id);
 	}
 	
 	@GET
 	@Path("/todas")
+	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carta> consultarTodas(){
 		 return service.consultarTodas();
 	}
