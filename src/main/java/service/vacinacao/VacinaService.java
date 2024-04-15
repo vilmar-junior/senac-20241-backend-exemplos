@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.entity.vacinacao.Vacina;
 import model.repository.vacinacao.VacinaRepository;
+import model.seletor.VacinaSeletor;
 
 public class VacinaService {
 
@@ -27,5 +28,9 @@ public class VacinaService {
 
 	public List<Vacina> consultarTodas() {
 		return repository.consultarTodos();
+	}
+	
+	public List<Vacina> consultarComFiltros(VacinaSeletor seletor) {
+		return repository.consultarComFiltros(seletor);
 	}
 }

@@ -12,12 +12,21 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.vacinacao.Vacina;
+import model.seletor.VacinaSeletor;
 import service.vacinacao.VacinaService;
 
 @Path("/vacina")
 public class VacinaController {
 	
 	private VacinaService service = new VacinaService();
+	
+	@POST
+	@Path("/filtro")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Vacina> consultarComFiltros(VacinaSeletor seletor){
+		 return service.consultarComFiltros(seletor);
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)

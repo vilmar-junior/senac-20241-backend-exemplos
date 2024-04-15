@@ -170,13 +170,29 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 		Statement stmt = Banco.getStatement(conn);
 		
 		ResultSet resultado = null;
-		String query = " SELECT * FROM vacina ";
+		String query = " select v.* from vacina v "
+					 + " inner join pais p on v.id_pais = p.id "
+					 + " inner join pessoa pe on v.id_pesquisador = pe.id  ";
 		
+		boolean primeiro = true;
 		if(seletor.getNomeVacina() != null) {
-			query += " WHERE vacina.nome = " + seletor.getNomeVacina();
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += "upper(v.nome) LIKE UPPER('%" + seletor.getNomeVacina() + "%')";
+			primeiro = false;
 		}
 		
-		//TODO incluir demais filtros
+		if(seletor.getNomePais() != null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " upper(p.nome) LIKE UPPER('%" + seletor.getNomePais() + "%')";
+		}
 		
 		try{
 			resultado = stmt.executeQuery(query);
