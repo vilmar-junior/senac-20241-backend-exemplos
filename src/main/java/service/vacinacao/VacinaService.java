@@ -1,9 +1,13 @@
 package service.vacinacao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import exception.VacinacaoException;
 import model.entity.vacinacao.Vacina;
+import model.entity.vacinacao.Vacinacao;
 import model.repository.vacinacao.VacinaRepository;
+import model.repository.vacinacao.VacinacaoRepository;
 import model.seletor.VacinaSeletor;
 
 public class VacinaService {
@@ -18,7 +22,14 @@ public class VacinaService {
 		return repository.alterar(vacinaEditada);
 	}
 
-	public boolean excluir(int id) {
+	public boolean excluir(int id) throws VacinacaoException {
+		VacinacaoRepository vacinacaoRepository = new VacinacaoRepository();
+		ArrayList<Vacinacao> aplicacoesDaVacina = vacinacaoRepository.consultarPorIdVacina(id);
+		
+		if(aplicacoesDaVacina.size() > 0) {
+			throw new VacinacaoException("Vacina não pode ser excluída, pois já foi aplicada");
+		}
+		
 		return repository.excluir(id);
 	}
 

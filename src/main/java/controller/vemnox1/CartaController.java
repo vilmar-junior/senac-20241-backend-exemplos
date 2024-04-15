@@ -13,6 +13,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.vemnox1.Carta;
+import model.seletor.vemnox1.CartaSeletor;
 import service.vemnox1.CartaService;
 
 @Path("/carta")
@@ -53,6 +54,13 @@ public class CartaController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carta> consultarTodas(){
 		 return service.consultarTodas();
+	}
+	
+	@POST
+	@Path("/filtrar")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Carta> consultarComSeletor(CartaSeletor seletor){
+		 return service.consultarComSeletor(seletor);
 	}
 	
 	//Apenas para testes

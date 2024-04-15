@@ -182,4 +182,29 @@ public class VacinacaoRepository implements BaseRepository<Vacinacao> {
 		return aplicacoes;
 	}
 
+	public ArrayList<Vacinacao> consultarPorIdVacina(int idVacina) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ArrayList<Vacinacao> aplicacoes = new ArrayList<Vacinacao>();
+		ResultSet resultado = null;
+		String query = " SELECT * FROM aplicacao_vacina WHERE id_vacina = " + idVacina;
+		try{
+			resultado = stmt.executeQuery(query);
+
+			while(resultado.next()){
+				Vacinacao aplicacaoVacina = this.converterParaObjeto(resultado);
+				aplicacoes.add(aplicacaoVacina);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar todas as vacinações com doses da vacina " + idVacina);
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return aplicacoes;
+	}
+
 }
