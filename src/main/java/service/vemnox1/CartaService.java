@@ -6,6 +6,7 @@ import java.util.List;
 import exception.VemNoX1Exception;
 import model.entity.vemnox1.Carta;
 import model.repository.vemnox1.CartaRepository;
+import model.seletor.vemnox1.CartaSeletor;
 
 public class CartaService {
 
@@ -38,6 +39,10 @@ public class CartaService {
 
 	public List<Carta> consultarTodas() {
 		return repository.consultarTodos();
+	}
+	
+	public List<Carta> consultarComSeletor(CartaSeletor seletor) {
+		return repository.consultarComSeletor(seletor);
 	}
 
 	public ArrayList<Carta> sortearSeisCartas() {

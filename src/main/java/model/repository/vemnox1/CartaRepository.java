@@ -16,6 +16,7 @@ import model.entity.vemnox1.Carta;
 import model.entity.vemnox1.Partida;
 import model.repository.Banco;
 import model.repository.BaseRepository;
+import model.seletor.vemnox1.CartaSeletor;
 
 public class CartaRepository implements BaseRepository<Carta> {
 
@@ -33,17 +34,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 			ResultSet resultado = pstmt.executeQuery();
 			
 			while(resultado.next()) {
-				Carta c = new Carta();
-				c.setId(resultado.getInt("ID"));
-				c.setForca(resultado.getInt("FORCA"));
-				c.setInteligencia(resultado.getInt("INTELIGENCIA"));
-				c.setVelocidade(resultado.getInt("VELOCIDADE"));
-				c.setNome(resultado.getString("NOME"));
-				
-				if(resultado.getDate("DATA_CADASTRO") != null) {
-					c.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate());
-				}
-				
+				Carta c = construirDoResultSet(resultado);
 				cartasSorteadas.add(c);
 			}
 		} catch (SQLException e) {
@@ -57,18 +48,13 @@ public class CartaRepository implements BaseRepository<Carta> {
 		return cartasSorteadas;
 	}
 	
-	
 	@Override
 	public Carta salvar(Carta novaCarta) {
 		String query = "INSERT INTO carta (nome, forca, inteligencia, velocidade, data_cadastro) VALUES (?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
-			pstmt.setString(1, novaCarta.getNome());
-			pstmt.setInt(2, novaCarta.getForca());
-			pstmt.setInt(3, novaCarta.getInteligencia());
-			pstmt.setInt(4, novaCarta.getVelocidade());
-			pstmt.setDate(5, Date.valueOf(LocalDate.now()));
+			this.preencherParametrosInsertOuUpdate(novaCarta, pstmt);
 			
 			pstmt.execute();
 			ResultSet resultado = pstmt.getGeneratedKeys();
@@ -107,7 +93,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 	}
 
 	@Override
-	public boolean alterar(Carta novaCarta) {
+	public boolean alterar(Carta cartaAlterada) {
 		boolean alterou = false;
 		String query = " UPDATE carta SET nome = ?, forca = ?, inteligencia = ?, "
 				     + "       velocidade = ?, data_cadastro = ? "
@@ -115,13 +101,9 @@ public class CartaRepository implements BaseRepository<Carta> {
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
-			pstmt.setString(1, novaCarta.getNome());
-			pstmt.setInt(2, novaCarta.getForca());
-			pstmt.setInt(3, novaCarta.getInteligencia());
-			pstmt.setInt(4, novaCarta.getVelocidade());
-			pstmt.setDate(5, Date.valueOf(novaCarta.getDataCadastro()));
+			this.preencherParametrosInsertOuUpdate(cartaAlterada, pstmt);
 			
-			pstmt.setInt(6, novaCarta.getId());
+			pstmt.setInt(6, cartaAlterada.getId());
 			alterou = pstmt.executeUpdate() > 0;
 		} catch (SQLException erro) {
 			System.out.println("Erro ao atualizar carta");
@@ -139,20 +121,13 @@ public class CartaRepository implements BaseRepository<Carta> {
 		Statement stmt = Banco.getStatement(conn);
 		
 		ResultSet resultado = null;
-		Carta carta = new Carta();
+		Carta carta = null;
 		String query = " SELECT * FROM carta WHERE id = " + id;
 		
 		try{
 			resultado = stmt.executeQuery(query);
 			if(resultado.next()){
-				carta.setId(Integer.parseInt(resultado.getString("ID")));
-				carta.setForca(resultado.getInt("FORCA"));
-				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
-				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
-				carta.setNome(resultado.getString("NOME"));
-				if(resultado.getDate("DATA_CADASTRO") != null) {
-					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
-				}
+				carta = construirDoResultSet(resultado);
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao consultar carta com id (" + id + ")");
@@ -177,15 +152,7 @@ public class CartaRepository implements BaseRepository<Carta> {
 		try{
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()){
-				Carta carta = new Carta();
-				carta.setId(resultado.getInt("ID"));
-				carta.setForca(resultado.getInt("FORCA"));
-				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
-				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
-				carta.setNome(resultado.getString("NOME"));
-				if(resultado.getDate("DATA_CADASTRO") != null) {
-					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
-				}
+				Carta carta = construirDoResultSet(resultado);
 				cartas.add(carta);
 			}
 		} catch (SQLException erro){
@@ -197,5 +164,102 @@ public class CartaRepository implements BaseRepository<Carta> {
 			Banco.closeConnection(conn);
 		}
 		return cartas;
+	}
+	
+	public ArrayList<Carta> consultarComSeletor(CartaSeletor seletor) {
+		ArrayList<Carta> cartas = new ArrayList<>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT * FROM carta c";
+		
+		if(seletor.temFiltro()) {
+			query = preencherFiltros(seletor, query);
+		}
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()){
+				Carta carta = construirDoResultSet(resultado);
+				cartas.add(carta);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar todas as cartas");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return cartas;
+	}
+	
+	private String preencherFiltros(CartaSeletor seletor, String sql) {
+		
+		//Tem pelo menos UM filtro
+		sql += " WHERE ";
+		boolean primeiro = true;
+		
+		if(seletor.getNome() != null && seletor.getNome().trim().length() > 0) {
+			if(!primeiro) {
+				sql += " AND ";
+			}
+			
+			sql += " c.nome LIKE '%" + seletor.getNome() + "%'";
+			primeiro = false;
+		}
+		if(seletor.getForcaMinima() > 0 && seletor.getForcaMaxima() > 0) {
+			//Ambos preenchidos
+			if(!primeiro) {
+				sql += " AND ";
+			}
+			
+			sql += " c.forca BETWEEN " + seletor.getForcaMinima() + " AND " + seletor.getForcaMaxima();
+			primeiro = false;
+		}else if(seletor.getForcaMinima() > 0) {
+			//Somente a mínima --> pesquisa todas as cartas com no MÍNIMO o valor informado (operador <= )
+			if(!primeiro) {
+				sql += " AND ";
+			}
+			
+			sql += " c.forca >= " + seletor.getForcaMinima();
+			primeiro = false;
+		}else if(seletor.getForcaMaxima() > 0) {
+			//Somente a mínima --> pesquisa todas as cartas com no MÁXIMO o valor informado (operador <= )
+			if(!primeiro) {
+				sql += " AND ";
+			}
+			
+			sql += " c.forca <= " + seletor.getForcaMaxima();
+			primeiro = false;
+		}
+		
+		//TODO fazer para os demais filtros
+		
+		return sql;
+	}
+
+	private Carta construirDoResultSet(ResultSet resultado) throws SQLException {
+		Carta c = new Carta();
+		c.setId(resultado.getInt("ID"));
+		c.setForca(resultado.getInt("FORCA"));
+		c.setInteligencia(resultado.getInt("INTELIGENCIA"));
+		c.setVelocidade(resultado.getInt("VELOCIDADE"));
+		c.setNome(resultado.getString("NOME"));
+		
+		if(resultado.getDate("DATA_CADASTRO") != null) {
+			c.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate());
+		}
+		
+		return c;
+	}
+	
+	private void preencherParametrosInsertOuUpdate(Carta novaCarta, PreparedStatement pstmt) throws SQLException {
+		pstmt.setString(1, novaCarta.getNome());
+		pstmt.setInt(2, novaCarta.getForca());
+		pstmt.setInt(3, novaCarta.getInteligencia());
+		pstmt.setInt(4, novaCarta.getVelocidade());
+		pstmt.setDate(5, Date.valueOf(novaCarta.getDataCadastro()));
 	}
 }
