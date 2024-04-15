@@ -12,6 +12,7 @@ import model.entity.vacinacao.Pessoa;
 import model.entity.vacinacao.Vacina;
 import model.repository.Banco;
 import model.repository.BaseRepository;
+import model.seletor.VacinaSeletor;
 
 public class VacinaRepository implements BaseRepository<Vacina> {
 
@@ -154,6 +155,48 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 				vacina.setPesquisadorResponsavel(pesquisador);
 				vacina.setMedia(resultado.getDouble("MEDIA"));
 
+				vacinas.add(vacina);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar todas as vacinas");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return vacinas;
+	}
+	
+	public ArrayList<Vacina> consultarComFiltros(VacinaSeletor seletor){
+		ArrayList<Vacina> vacinas = new ArrayList<>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT * FROM vacina ";
+		
+		if(seletor.getNomeVacina() != null) {
+			query += " WHERE vacina.nome = " + seletor.getNomeVacina();
+		}
+		
+		//TODO incluir demais filtros
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			PessoaRepository pessoaRepository = new PessoaRepository();
+			while(resultado.next()){
+				Vacina vacina = new Vacina();
+				vacina.setId(Integer.parseInt(resultado.getString("ID")));
+				vacina.setNome(resultado.getString("NOME"));
+
+				PaisRepository paisRepository = new PaisRepository();
+				vacina.setPaisOrigem(paisRepository.consultarPorId(resultado.getInt("ID_PAIS")));
+
+				vacina.setEstagio(resultado.getInt("ESTAGIO_PESQUISA"));
+				vacina.setDataInicioPesquisa(resultado.getDate("DATA_INICIO_PESQUISA").toLocalDate()); 
+				Pessoa pesquisador = pessoaRepository.consultarPorId(resultado.getInt("ID_PESQUISADOR"));
+				vacina.setPesquisadorResponsavel(pesquisador);
 				vacinas.add(vacina);
 			}
 		} catch (SQLException erro){
