@@ -79,7 +79,30 @@ public class PaisRepository implements BaseRepository<Pais> {
 
 	@Override
 	public ArrayList<Pais> consultarTodos() {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ArrayList<Pais> paises = new ArrayList<Pais>();
+		ResultSet resultado = null;
+		String query = " SELECT * FROM pais";
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()){
+				Pais pais = new Pais();
+				pais.setId(resultado.getInt("ID"));
+				pais.setNome(resultado.getString("NOME"));
+				pais.setSigla(resultado.getString("SIGLA"));
+				paises.add(pais);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar todos os países");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return paises;
 	}
 }
