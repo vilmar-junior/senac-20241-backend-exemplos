@@ -5,6 +5,7 @@ import java.util.List;
 
 import exception.VemNoX1Exception;
 import model.entity.vemnox1.Carta;
+import model.repository.vemnox1.CartaPartidaRepository;
 import model.repository.vemnox1.CartaRepository;
 import model.seletor.vemnox1.CartaSeletor;
 
@@ -15,6 +16,7 @@ public class CartaService {
 	private static final int MINIMO_CARTA = 1;
 	
 	private CartaRepository repository = new CartaRepository();
+	private CartaPartidaRepository cartaPartidaRepository = new CartaPartidaRepository();
 	
 	public Carta salvar(Carta novaCarta) throws VemNoX1Exception {
 		validarCarta(novaCarta);
@@ -28,8 +30,11 @@ public class CartaService {
 		return repository.alterar(cartaEditada);
 	}
 
-	public boolean excluir(int id) {
-		//TODO pode excluir carta já usada em partidas?
+	public boolean excluir(int id) throws VemNoX1Exception {
+		if(cartaPartidaRepository.cartaJaUtilizadaEmPartida(id)) {
+			throw new VemNoX1Exception("Carta não pode ser excluída, pois já foi utilizada em partida(s)");
+		}
+		
 		return repository.excluir(id);
 	}
 
