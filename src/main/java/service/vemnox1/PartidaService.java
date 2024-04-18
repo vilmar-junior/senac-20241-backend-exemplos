@@ -3,11 +3,13 @@ package service.vemnox1;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import exception.VemNoX1Exception;
 import model.dto.vemnox1.JogadaDTO;
 import model.dto.vemnox1.PartidaDTO;
 import model.entity.enums.vemnox1.Resultado;
 import model.entity.vemnox1.Carta;
 import model.entity.vemnox1.CartaNaPartida;
+import model.entity.vemnox1.Jogador;
 import model.entity.vemnox1.Partida;
 import model.repository.vemnox1.CartaPartidaRepository;
 import model.repository.vemnox1.CartaRepository;
@@ -21,14 +23,21 @@ public class PartidaService {
 	private CartaRepository cartaRepository = new CartaRepository();
 	private CartaPartidaRepository cartaPartidaRepository = new CartaPartidaRepository();
 	
-	public PartidaDTO iniciarPartida(int idJogador) {
+	public PartidaDTO iniciarPartida(int idJogador) throws VemNoX1Exception {
+		Jogador jogador = jogadorRepository.consultarPorId(idJogador);
+		
+		if(jogador == null) {
+			throw new VemNoX1Exception("Informe um jogador válido");
+		}
+		
+		
 		PartidaDTO dto = new PartidaDTO();
 		
 		//Criar uma partida -> inserir Partida [PartidaRepository]
 		Partida novaPartida = new Partida();
 		novaPartida.setResultado(Resultado.EM_ANDAMENTO);
 		novaPartida.setData(LocalDateTime.now());
-		novaPartida.setJogador(jogadorRepository.consultarPorId(idJogador));
+		novaPartida.setJogador(jogador);
 		novaPartida = partidaRepository.salvar(novaPartida);
 		
 		ArrayList<String> atributos = new ArrayList<String>();

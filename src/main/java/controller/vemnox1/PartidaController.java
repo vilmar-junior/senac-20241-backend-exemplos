@@ -2,6 +2,7 @@ package controller.vemnox1;
 
 import java.util.List;
 
+import exception.VemNoX1Exception;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -23,7 +24,7 @@ public class PartidaController {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PartidaDTO iniciarPartida(@PathParam("idJogador") int idJogador){
+	public PartidaDTO iniciarPartida(@PathParam("idJogador") int idJogador) throws VemNoX1Exception{
 		return service.iniciarPartida(idJogador);
 	}
 	

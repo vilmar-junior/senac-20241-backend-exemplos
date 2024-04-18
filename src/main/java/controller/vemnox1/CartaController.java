@@ -38,7 +38,7 @@ public class CartaController {
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.TEXT_PLAIN)
-	public boolean excluir(@PathParam("id") int id){
+	public boolean excluir(@PathParam("id") int id) throws VemNoX1Exception{
 		 return service.excluir(id);
 	}
 	
@@ -53,7 +53,7 @@ public class CartaController {
 	@Path("/todas")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carta> consultarTodas(){
-		 return service.consultarTodas();
+		return service.consultarTodas();
 	}
 	
 	@POST

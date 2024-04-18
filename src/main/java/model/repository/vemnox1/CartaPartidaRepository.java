@@ -182,4 +182,29 @@ public class CartaPartidaRepository implements BaseRepository<CartaNaPartida> {
 		}
 		return partidas;
 	}
+
+
+	public boolean cartaJaUtilizadaEmPartida(int idCarta) {
+		boolean cartaJaUtilizadaEmPartida = false;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT count(*) FROM carta_partida where ID_CARTA = " + idCarta;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()){
+				cartaJaUtilizadaEmPartida = resultado.getInt(1) > 0;
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao verificar se carta já foi usada em partida(s)");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return cartaJaUtilizadaEmPartida;
+	}
 }

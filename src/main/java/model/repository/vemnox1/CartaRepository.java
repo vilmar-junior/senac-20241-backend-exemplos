@@ -172,20 +172,25 @@ public class CartaRepository implements BaseRepository<Carta> {
 		Statement stmt = Banco.getStatement(conn);
 		
 		ResultSet resultado = null;
-		String query = " SELECT * FROM carta c";
+		String sql = " SELECT * FROM carta c";
 		
 		if(seletor.temFiltro()) {
-			query = preencherFiltros(seletor, query);
+			sql = preencherFiltros(seletor, sql);
+		}
+		
+		if(seletor.temPaginacao()) {
+			sql += " LIMIT " + seletor.getLimite() 
+				 + " OFFSET " + seletor.getOffset();
 		}
 		
 		try{
-			resultado = stmt.executeQuery(query);
+			resultado = stmt.executeQuery(sql);
 			while(resultado.next()){
 				Carta carta = construirDoResultSet(resultado);
 				cartas.add(carta);
 			}
 		} catch (SQLException erro){
-			System.out.println("Erro ao consultar todas as cartas");
+			System.out.println("Erro ao consultar cartas com seletor");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -235,8 +240,8 @@ public class CartaRepository implements BaseRepository<Carta> {
 			primeiro = false;
 		}
 		
-		//TODO fazer para os demais filtros
-		
+		//continua....
+				
 		return sql;
 	}
 

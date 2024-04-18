@@ -1,5 +1,7 @@
 package model.seletor.vemnox1;
 
+import java.time.LocalDate;
+
 import model.seletor.BaseSeletor;
 
 public class CartaSeletor extends BaseSeletor{
@@ -11,7 +13,27 @@ public class CartaSeletor extends BaseSeletor{
 	private int inteligenciaMaxima;
 	private int velocidadeMinima;
 	private int velocidadeMaxima;
+	
+	//filtragem de datas por período (início, fim)
+	private LocalDate dataInicioCadastro;
+	private LocalDate dataFimCadastro;
 
+	/**
+	 * Verifica se este seletro tem algum campo preenchido
+	 * @return true caso ao menos um dos atributos tenha sido preenchido
+	 */
+	public boolean temFiltro() {
+		return  (this.nome != null && this.nome.trim().length() > 0) 
+			 || (this.forcaMinima > 0)
+			 || (this.forcaMaxima > 0)
+		   	 || (this.inteligenciaMinima > 0)
+			 || (this.inteligenciaMaxima > 0)
+			 || (this.velocidadeMinima > 0)
+			 || (this.velocidadeMaxima > 0)
+			 || (this.dataInicioCadastro != null)
+			 || (this.dataFimCadastro != null);
+	}
+	
 	public CartaSeletor() {
 		
 	}
@@ -26,34 +48,6 @@ public class CartaSeletor extends BaseSeletor{
 		this.inteligenciaMaxima = inteligenciaMaxima;
 		this.velocidadeMinima = velocidadeMinima;
 		this.velocidadeMaxima = velocidadeMaxima;
-	}
-	
-	public boolean temFiltro() {
-		boolean temFiltroPreenchido = false;
-		
-		if(this.nome != null && this.nome.trim().length() > 0) {
-			temFiltroPreenchido = true;
-		}
-		if(this.forcaMinima > 0) {
-			temFiltroPreenchido = true;
-		}
-		if(this.forcaMaxima > 0) {
-			temFiltroPreenchido = true;
-		}
-		if(this.inteligenciaMinima > 0) {
-			temFiltroPreenchido = true;
-		}
-		if(this.inteligenciaMaxima > 0) {
-			temFiltroPreenchido = true;
-		}
-		if(this.velocidadeMinima > 0) {
-			temFiltroPreenchido = true;
-		}
-		if(this.velocidadeMaxima > 0) {
-			temFiltroPreenchido = true;
-		}
-		
-		return temFiltroPreenchido;
 	}
 	
 	
@@ -98,5 +92,21 @@ public class CartaSeletor extends BaseSeletor{
 	}
 	public void setVelocidadeMaxima(int velocidadeMaxima) {
 		this.velocidadeMaxima = velocidadeMaxima;
+	}
+
+	public LocalDate getDataInicioCadastro() {
+		return dataInicioCadastro;
+	}
+
+	public void setDataInicioCadastro(LocalDate dataInicioCadastro) {
+		this.dataInicioCadastro = dataInicioCadastro;
+	}
+
+	public LocalDate getDataFimCadastro() {
+		return dataFimCadastro;
+	}
+
+	public void setDataFimCadastro(LocalDate dataFimCadastro) {
+		this.dataFimCadastro = dataFimCadastro;
 	}
 }
