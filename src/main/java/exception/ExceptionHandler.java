@@ -27,7 +27,7 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 
 	/**
 	 * Mapeia uma exceção para {@link javax.ws.rs.core.Response}. <br>
-	 * Para mostrar um json do erro ao inves da tela padrão do Tomcat <br>
+	 * Para mostrar um json do erro ao invés da tela padrão do Tomcat <br>
 	 *
 	 * @param exception a exceção que foi lançada
 	 * @return um objeto Response contendo um JSON com 2 atributos:
@@ -48,7 +48,8 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 		PrintWriter pw = new PrintWriter(sw);
 		exception.printStackTrace(pw);
 		mapAtributos.put("stacktrace", sw.toString());
-
+		
+		//Define o JSON que será retornado
 		Gson gson = new GsonBuilder().create();
 		String json = gson.toJson(mapAtributos);
 
