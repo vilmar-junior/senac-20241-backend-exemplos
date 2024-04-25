@@ -82,4 +82,8 @@ public class PessoaService {
 			throw new VacinacaoException("Preencha o(s) seguinte(s) campo(s) \n " + mensagemValidacao);
 		}
 	}
+
+	public List<Pessoa> consultarPesquisadores() {
+		return this.repository.consultarPesquisadores();
+	}
 }
