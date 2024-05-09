@@ -75,4 +75,12 @@ public class CartaService {
 									   + MINIMO_CARTA + " e " + MAXIMO_CARTA);
 		}
 	}
+
+	public int contarTotalRegistros(CartaSeletor seletor) {
+		return repository.contarTotalRegistros(seletor);
+	}
+
+	public int contarPaginas(CartaSeletor seletor) {
+		return repository.contarPaginas(seletor);
+	}
 }

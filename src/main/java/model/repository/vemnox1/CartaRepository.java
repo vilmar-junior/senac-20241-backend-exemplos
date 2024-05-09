@@ -267,4 +267,46 @@ public class CartaRepository implements BaseRepository<Carta> {
 		pstmt.setInt(4, novaCarta.getVelocidade());
 		pstmt.setDate(5, Date.valueOf(novaCarta.getDataCadastro()));
 	}
+
+	public int contarTotalRegistros(CartaSeletor seletor) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		int totalRegistros = 0;
+		ResultSet resultado = null;
+		String query = " select COUNT(c.ID) from carta c ";
+		
+		if(seletor.temFiltro()) {
+			query = preencherFiltros(seletor, query);
+		}
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()){
+				totalRegistros = resultado.getInt(1);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao contar as cartas filtradas");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return totalRegistros;
+	}
+
+	public int contarPaginas(CartaSeletor seletor) {
+		int totalPaginas = 0;
+		int totalRegistros = this.contarTotalRegistros(seletor);	
+		
+		totalPaginas =  totalRegistros / seletor.getLimite();
+		int resto = totalRegistros % seletor.getLimite(); 
+		
+		if(resto > 0) {
+			totalPaginas++;
+		}
+		
+		return totalPaginas;
+	}
 }
