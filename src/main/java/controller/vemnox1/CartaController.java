@@ -13,7 +13,6 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.vemnox1.Carta;
-import model.seletor.VacinaSeletor;
 import model.seletor.vemnox1.CartaSeletor;
 import service.vemnox1.CartaService;
 

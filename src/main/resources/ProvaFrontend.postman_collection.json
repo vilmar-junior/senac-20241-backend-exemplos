@@ -1,0 +1,76 @@
+{
+	"info": {
+		"_postman_id": "bd12ab1b-7b32-49e4-82e8-10c727c9b830",
+		"name": "ProvaFrontend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5303656"
+	},
+	"item": [
+		{
+			"name": "[Carros] Consulta com filtros",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"modelo\": \"\",\r\n    \"nomeMarca\": \"Toyota\",\r\n    \"anoInicial\" : 1971,\r\n    \"anoFinal\": 2000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carro/filtro",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"carro",
+						"filtro"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Montadora] Consultar total de carros por idMontadora",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/montadora/estoque-carros/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"montadora",
+						"estoque-carros",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
