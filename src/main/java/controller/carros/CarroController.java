@@ -13,7 +13,7 @@ import service.carros.CarroService;
 
 @Path("/carro")
 public class CarroController {
-	//Comentário 3
+	//Comentário Final resolvido
 	private CarroService service = new CarroService();
 	
 	@POST
