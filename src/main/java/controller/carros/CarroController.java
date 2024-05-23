@@ -23,4 +23,8 @@ public class CarroController {
 	public ArrayList<Carro> consultarComFiltros(CarroSeletor seletor) {
 		return service.consultarComFiltros(seletor);
 	}
+	
+	public ArrayList<Carro> consultarComFiltros2(CarroSeletor seletor) {
+		return service.consultarComFiltros(seletor);
+	}
 }
