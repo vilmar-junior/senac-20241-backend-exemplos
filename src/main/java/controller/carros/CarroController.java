@@ -21,6 +21,7 @@ public class CarroController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Carro> consultarComFiltros(CarroSeletor seletor) {
+		//Alterado
 		return service.consultarComFiltros(seletor);
 	}
 }
