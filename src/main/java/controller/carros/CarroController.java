@@ -13,7 +13,7 @@ import service.carros.CarroService;
 
 @Path("/carro")
 public class CarroController {
-	
+	//Comentário Final resolvido
 	private CarroService service = new CarroService();
 	
 	@POST
@@ -21,6 +21,11 @@ public class CarroController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Carro> consultarComFiltros(CarroSeletor seletor) {
+		//Alterado
+		return service.consultarComFiltros(seletor);
+	}
+	
+	public ArrayList<Carro> consultarComFiltros2(CarroSeletor seletor) {
 		return service.consultarComFiltros(seletor);
 	}
 }
