@@ -2,8 +2,6 @@ package service.carros;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import exception.CarrosException;
 import model.entity.carros.Carro;
@@ -15,51 +13,15 @@ public class CarroService {
 	private MontadoraService montadoraService = new MontadoraService();
 
 	public ArrayList<Carro> consultarComFiltros(CarroSeletor seletor) {
-		ArrayList<Carro> carros = gerarMockCarros();
+		ArrayList<Carro> carros = new ArrayList<>();
 		
-		if(seletor.temFiltro()) {
-			if(seletor.getModelo() != null && !seletor.getModelo().trim().isBlank()) {
-				carros = filtrarPorModelo(carros, seletor.getModelo());
-			}
-			if(seletor.getNomeMarca() != null && !seletor.getNomeMarca().trim().isBlank()) {
-				carros = filtrarPorNomeMarca(carros, seletor.getNomeMarca());
-			}
-			if(seletor.getAnoInicial() != null || seletor.getAnoFinal() != null) {
-				carros = filtrarPorAno(carros, seletor);
-			}
-		}
+		//TODO obter os carros cadastrados no banco
 		
 		return carros;
 	}
 
-	private ArrayList<Carro> filtrarPorAno(ArrayList<Carro> carros, CarroSeletor seletor) {
-		Predicate<Carro> intervalo;
-		if(seletor.getAnoInicial() != null && seletor.getAnoFinal() != null) {
-			intervalo = carro -> carro.getAno() >= seletor.getAnoInicial() && carro.getAno() <= seletor.getAnoFinal();
-		} else if(seletor.getAnoInicial() != null) {
-			intervalo = carro -> carro.getAno() >= seletor.getAnoInicial();
-		} else {
-			intervalo = carro ->  carro.getAno() <= seletor.getAnoFinal(); 
-		}
-		
-		// Filtrando os carros com base no predicado
-		return (ArrayList<Carro>) carros.stream()
-				.filter(intervalo)
-				.collect(Collectors.toList());
-	}
-
-	private ArrayList<Carro> filtrarPorNomeMarca(ArrayList<Carro> carros, String nomeMarca) {
-		return (ArrayList<Carro>) carros.stream()
-				    .filter(carro -> carro.getMontadora().getNome().equals(nomeMarca))
-				    .collect(Collectors.toList());
-	}
-
-	private ArrayList<Carro> filtrarPorModelo(ArrayList<Carro> carros, String modelo) {
-		return (ArrayList<Carro>) carros.stream()
-	        	  					    .filter(carro -> carro.getModelo().equals(modelo))
-	        	  					    .collect(Collectors.toList());
-	}
-
+	//Método depreciado, não deve ser utilizado
+	@Deprecated()
 	private ArrayList<Carro> gerarMockCarros() {
 		ArrayList<Montadora> montadoras = montadoraService.gerarMockMontadoras();
 		
