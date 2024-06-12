@@ -59,4 +59,7 @@ public class Carta {
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
+	public int getTotalAtributos() {
+		return this.forca + this.velocidade + this.inteligencia;
+	}
 }

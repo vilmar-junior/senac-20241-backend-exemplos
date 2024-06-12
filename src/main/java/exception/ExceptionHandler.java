@@ -47,7 +47,8 @@ public class ExceptionHandler implements ExceptionMapper<Exception> {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 		exception.printStackTrace(pw);
-		mapAtributos.put("stacktrace", sw.toString());
+		//TODO descomentar
+		//mapAtributos.put("stacktrace", sw.toString());
 		
 		//Define o JSON que será retornado
 		Gson gson = new GsonBuilder().create();

@@ -2,6 +2,7 @@ package service.vemnox1;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 import exception.VemNoX1Exception;
 import model.dto.vemnox1.JogadaDTO;
@@ -17,6 +18,11 @@ import model.repository.vemnox1.JogadorRepository;
 import model.repository.vemnox1.PartidaRepository;
 
 public class PartidaService {
+	
+	private static final String FORCA = "Força";
+	private static final String INTELIGENCIA = "Inteligência";
+	private static final String VELOCIDADE = "Velocidade";
+	private static final int MAXIMO_ATRIBUTOS = 15;
 
 	private JogadorRepository jogadorRepository = new JogadorRepository();
 	private PartidaRepository partidaRepository = new PartidaRepository();
@@ -32,18 +38,13 @@ public class PartidaService {
 		
 		
 		PartidaDTO dto = new PartidaDTO();
-		
+		//TODO refatorar separando em métodos distintos
 		//Criar uma partida -> inserir Partida [PartidaRepository]
 		Partida novaPartida = new Partida();
 		novaPartida.setResultado(Resultado.EM_ANDAMENTO);
 		novaPartida.setData(LocalDateTime.now());
 		novaPartida.setJogador(jogador);
 		novaPartida = partidaRepository.salvar(novaPartida);
-		
-		ArrayList<String> atributos = new ArrayList<String>();
-		atributos.add("Força");
-		atributos.add("Inteligência");
-		atributos.add("Velocidade");
 		
 		//Sortear as 6 cartas -> sortearCartas [CartaRepository]
 		ArrayList<Carta> seisCartas = cartaRepository.sortearSeisCartas();
@@ -70,24 +71,216 @@ public class PartidaService {
 		//Montar o PartidaDTO e retornar 
 		dto.setIdPartida(novaPartida.getId());
 		dto.setResultadoUltimaJogada(null);
-		dto.setAtributosDisponiveis(atributos);
+		dto.setAtributosDisponiveis(obterAtributosDisponiveis(novaPartida));
 		dto.setCartasJogador(cartasDoJogador);
 		return dto;
 	}
 
-	public PartidaDTO jogar(JogadaDTO jogada) {
-		PartidaDTO partidaAtualizada = new PartidaDTO();
-		Partida partida = partidaRepository.consultarPorId(jogada.getIdPartida());
-		CartaNaPartida cartaJogada = cartaPartidaRepository.consultarPorId(jogada.getIdCartaNaPartidaSelecionada());
+	private List<String> obterAtributosDisponiveis(Partida novaPartida) {
+		ArrayList<String> atributos = new ArrayList<String>();
 		
-		if(jogada.getAtributoSelecionado() == "Força") {
-			int valorForca = cartaJogada.getCarta().getForca();
-			//TODO continuar
-			
+		if(!novaPartida.isJogouForca()) {
+			atributos.add(FORCA);
+		}
+		if(!novaPartida.isJogouInteligencia()) {
+			atributos.add(INTELIGENCIA);
 		}
 		
+		if(!novaPartida.isJogouVelocidade()) {
+			atributos.add(VELOCIDADE);
+		}
+		
+		return atributos;
+	}
+
+	public PartidaDTO jogar(JogadaDTO jogada) throws VemNoX1Exception {
+		Partida partida = partidaRepository.consultarPorId(jogada.getIdPartida());
+		CartaNaPartida cartaSelecionadaPeloJogador = cartaPartidaRepository.consultarPorId(jogada.getIdCartaNaPartidaSelecionada());
+		String atributoSelecionado = jogada.getAtributoSelecionado();
+		int valorAtributoJogador = obterValorAtributo(cartaSelecionadaPeloJogador.getCarta(), atributoSelecionado);
+		
+		List<CartaNaPartida> cartasCpuDisponiveis = partida.getCartasCpu().stream().filter(c -> !c.isUtilizada()).toList();
+		
+		if(cartaSelecionadaPeloJogador.isUtilizada()) {
+			throw new VemNoX1Exception("Carta selecionada já utilizada");
+		}
+		
+		if(cartasCpuDisponiveis.isEmpty()) {
+			throw new VemNoX1Exception("Todas as cartas foram utilizadas");
+		}
+		
+		if(!obterAtributosDisponiveis(partida).contains(atributoSelecionado)) {
+			throw new VemNoX1Exception("Atributo selecionado [" + atributoSelecionado + "] já jogado");
+		}
+		
+		CartaNaPartida cartaCpuSelecionada = escolherCartaCpu(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
+		
+		int valorAtributoCpu = obterValorAtributo(cartaCpuSelecionada.getCarta(), atributoSelecionado);
+		
+		Resultado resultadoJogada = this.aferirResultadoJogada(valorAtributoCpu, valorAtributoJogador);
+
+		this.marcarCartasComoUsadas(cartaSelecionadaPeloJogador, cartaCpuSelecionada);
+		this.atualizarJogadaNaPartida(partida, atributoSelecionado, resultadoJogada);
+		this.atualizarPartida(partida);
+		partida = this.partidaRepository.consultarPorId(partida.getId());
+		
+		PartidaDTO partidaAtualizada = new PartidaDTO();
+		partidaAtualizada.setResultadoUltimaJogada("Atributo selecionado no X1: " + atributoSelecionado
+				+ " Carta do jogador [" + cartaSelecionadaPeloJogador.getCarta().getNome() + " - " + valorAtributoJogador + "]" 
+				+ " X Carta da CPU [" + cartaSelecionadaPeloJogador.getCarta().getNome() + " - " + valorAtributoCpu + "]" 
+				+ "Resultado da jogada: " + resultadoJogada);
+		partidaAtualizada.setCartasJogador(partida.getCartasJogador());
 		
 		return partidaAtualizada;
 	}
 
+	private CartaNaPartida escolherCartaCpu(List<CartaNaPartida> cartasCpuDisponiveis, String atributoSelecionado, int valorAtributoJogador) {
+		CartaNaPartida cartaCpuSelecionada = obterCartaVitoriaCpu(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
+		
+		if(cartaCpuSelecionada == null) {
+			cartaCpuSelecionada = obterCartaEmpate(cartasCpuDisponiveis, atributoSelecionado, valorAtributoJogador);
+		}
+		
+		if(cartaCpuSelecionada == null) {
+			cartaCpuSelecionada = obterPiorCartaCpu(cartasCpuDisponiveis);
+		}
+		
+		return cartaCpuSelecionada;
+	}
+
+	private void atualizarPartida(Partida partida) {
+		Resultado resultado = Resultado.EM_ANDAMENTO;
+		int vitoriasJogador = partida.getRoundsVencidosJogador();
+		int vitoriasCpu = partida.getRoundsVencidosCpu();
+		int empates = partida.getRoundsEmpatados();
+		
+		if(vitoriasJogador >= 2) {
+			resultado = Resultado.VITORIA_JOGADOR;
+		}
+		
+		if(vitoriasCpu >= 2) {
+			resultado = Resultado.VITORIA_CPU;
+		}
+		
+		if(empates == 3 || (empates + vitoriasCpu + vitoriasJogador) == 3) {
+			resultado = Resultado.EMPATE;
+		}
+		
+		partida.setResultado(resultado);
+	}
+
+	private void atualizarJogadaNaPartida(Partida partida, String atributoSelecionado, Resultado resultadoJogada) {
+		switch (atributoSelecionado) {
+			case FORCA: {
+				partida.setJogouForca(true);
+				break;
+			}
+			case INTELIGENCIA: {
+				partida.setJogouInteligencia(true);
+				break;
+			}
+			case VELOCIDADE: {
+				partida.setJogouVelocidade(true);
+				break;
+			}
+		}
+		
+		partida.setResultado(resultadoJogada);
+		
+		if(resultadoJogada == Resultado.EMPATE) {
+			partida.setRoundsEmpatados(partida.getRoundsEmpatados() + 1);
+		}
+		
+		if(resultadoJogada == Resultado.VITORIA_CPU) {
+			partida.setRoundsEmpatados(partida.getRoundsVencidosCpu() + 1);
+		}
+		
+		if(resultadoJogada == Resultado.VITORIA_JOGADOR) {
+			partida.setRoundsEmpatados(partida.getRoundsVencidosJogador() + 1);
+		}
+	}
+
+	private CartaNaPartida obterCartaVitoriaCpu(List<CartaNaPartida> cartasCpuDisponiveis, String atributoSelecionado, int valorAtributoJogador) {
+		CartaNaPartida cartaCpuSelecionada = null;
+		int valorAtributoCpu = 0;
+		for(CartaNaPartida cartaCpu: cartasCpuDisponiveis) {
+			valorAtributoCpu = obterValorAtributo(cartaCpu.getCarta(), atributoSelecionado);
+			
+			if(valorAtributoCpu > valorAtributoJogador) {
+				cartaCpuSelecionada = cartaCpu;
+				break;
+			}
+		}
+		
+		return cartaCpuSelecionada;
+	}
+	
+	private CartaNaPartida obterCartaEmpate(List<CartaNaPartida> cartasCpuDisponiveis, String atributoSelecionado, int valorAtributoJogador) {
+		CartaNaPartida cartaCpuSelecionada = null;
+		int valorAtributoCpu = 0;
+		for(CartaNaPartida cartaCpu: cartasCpuDisponiveis) {
+			valorAtributoCpu = obterValorAtributo(cartaCpu.getCarta(), atributoSelecionado);
+			
+			if(valorAtributoCpu == valorAtributoJogador) {
+				cartaCpuSelecionada = cartaCpu;
+				break;
+			}
+		}
+		
+		return cartaCpuSelecionada;
+	}
+
+	private CartaNaPartida obterPiorCartaCpu(List<CartaNaPartida> cartasCpuDisponiveis) {
+		CartaNaPartida piorCartaCpuSelecionada = null;
+		int piorTotalCarta = MAXIMO_ATRIBUTOS + 1; //Valor acima do máximo possível
+		
+		for(CartaNaPartida cartaCpu: cartasCpuDisponiveis) {
+			int totalAtributosCartaAtual = cartaCpu.getCarta().getTotalAtributos();
+			
+			if(totalAtributosCartaAtual < piorTotalCarta) {
+				piorCartaCpuSelecionada = cartaCpu;
+				piorTotalCarta = totalAtributosCartaAtual;
+			}
+		}
+		
+		return piorCartaCpuSelecionada;
+	}
+
+	private void marcarCartasComoUsadas(CartaNaPartida cartaJogada, CartaNaPartida cartaCpuSelecionada) {
+		cartaJogada.setUtilizada(true);
+		cartaCpuSelecionada.setUtilizada(true);
+		
+		this.cartaPartidaRepository.alterar(cartaJogada);
+		this.cartaPartidaRepository.alterar(cartaCpuSelecionada);
+	}
+
+	private Resultado aferirResultadoJogada(int valorAtributoCpu, int valorAtributoJogador) {
+		Resultado resultadoJogada = Resultado.EMPATE;
+		
+		if(valorAtributoCpu > valorAtributoJogador) {
+			resultadoJogada = Resultado.VITORIA_CPU;
+		}
+		
+		if(valorAtributoCpu < valorAtributoJogador) {
+			resultadoJogada = Resultado.VITORIA_JOGADOR;
+		}
+
+		return resultadoJogada;
+	}
+	
+	private int obterValorAtributo(Carta carta, String atributoSelecionado) {
+		switch (atributoSelecionado) {
+			case FORCA: {
+				return carta.getForca();
+			}
+			case INTELIGENCIA: {
+				return carta.getInteligencia();
+			}
+			case VELOCIDADE: {
+				return carta.getVelocidade();
+			}
+			default:
+				return 0;
+		}
+	}
 }

@@ -32,7 +32,7 @@ public class PartidaController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PartidaDTO jogar(JogadaDTO jogada){
+	public PartidaDTO jogar(JogadaDTO jogada) throws VemNoX1Exception{
 		return service.jogar(jogada);
 	}
 	

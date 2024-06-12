@@ -128,6 +128,14 @@ public class CartaRepository implements BaseRepository<Carta> {
 			resultado = stmt.executeQuery(query);
 			if(resultado.next()){
 				carta = construirDoResultSet(resultado);
+				carta.setNome(resultado.getString("NOME"));
+				carta.setId(Integer.parseInt(resultado.getString("ID")));
+				carta.setForca(resultado.getInt("FORCA"));
+				carta.setInteligencia(resultado.getInt("INTELIGENCIA"));
+				carta.setVelocidade(resultado.getInt("VELOCIDADE"));
+				if(resultado.getDate("DATA_CADASTRO") != null) {
+					carta.setDataCadastro(resultado.getDate("DATA_CADASTRO").toLocalDate()); 
+				}
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao consultar carta com id (" + id + ")");
