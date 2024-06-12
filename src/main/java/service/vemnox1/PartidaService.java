@@ -3,7 +3,6 @@ package service.vemnox1;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import exception.VemNoX1Exception;
 import model.dto.vemnox1.JogadaDTO;
