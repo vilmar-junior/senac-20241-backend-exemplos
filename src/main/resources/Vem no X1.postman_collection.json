@@ -47,7 +47,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nome\": \"Romário de Souza Faria\",\r\n    \"email\": \"romario11@gmail.com\",\r\n    \"dataNascimento\": \"1966-01-29\"\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
