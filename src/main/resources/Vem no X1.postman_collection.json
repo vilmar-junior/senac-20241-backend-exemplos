@@ -1,11 +1,77 @@
 {
 	"info": {
-		"_postman_id": "08553143-d285-4df6-8d02-2c337ba58e48",
+		"_postman_id": "8010b8f9-dbc3-471d-a83e-858d99e1b90a",
 		"name": "Senac - Vem no X1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5303656"
 	},
 	"item": [
+		{
+			"name": "[Jogada] Realizar jogada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"idPartida\": 3,\r\n\t\"idCartaNaPartidaSelecionada\": 15,\r\n\t\"atributoSelecionado\": \"Inteligência\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/partida/jogar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"partida",
+						"jogar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogada] Nova Partida",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Romário de Souza Faria\",\r\n    \"email\": \"romario11@gmail.com\",\r\n    \"dataNascimento\": \"1966-01-29\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/partida/iniciar/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"partida",
+						"iniciar",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "[Jogador] Cadastrar",
 			"request": {
@@ -111,12 +177,12 @@
 			"response": []
 		},
 		{
-			"name": "[Jogador] Consultar todas",
+			"name": "[Jogador] Consultar todos",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador/todas",
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador/todos",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -126,7 +192,7 @@
 						"senac-20241-backend-exemplos",
 						"rest",
 						"jogador",
-						"todas"
+						"todos"
 					]
 				}
 			},
@@ -198,7 +264,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carta/1",
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carta/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -208,7 +274,7 @@
 						"senac-20241-backend-exemplos",
 						"rest",
 						"carta",
-						"1"
+						"3"
 					]
 				}
 			},

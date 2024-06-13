@@ -48,7 +48,7 @@ public class JogadorController {
 	}
 	
 	@GET
-	@Path("/todas")
+	@Path("/todos")
 	public List<Jogador> consultarTodas(){
 		 return service.consultarTodas();
 	}
