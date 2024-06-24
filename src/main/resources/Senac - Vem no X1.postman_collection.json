@@ -1,0 +1,371 @@
+{
+	"info": {
+		"_postman_id": "8010b8f9-dbc3-471d-a83e-858d99e1b90a",
+		"name": "Senac - Vem no X1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5303656"
+	},
+	"item": [
+		{
+			"name": "[Jogada] Realizar jogada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"idPartida\": 3,\r\n\t\"idCartaNaPartidaSelecionada\": 15,\r\n\t\"atributoSelecionado\": \"Inteligência\" \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/partida/jogar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"partida",
+						"jogar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogada] Nova Partida",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/partida/iniciar/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"partida",
+						"iniciar",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogador] Cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Ronaldo Assis Moreira\",\r\n    \"email\": \"ronaldinho10@gmail.com\",\r\n    \"dataNascimento\": \"1980-03-21\",\r\n    \"senha\": \"ronaldinho10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"jogador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogador] Atualizar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"nome\": \"Vampeta\",\r\n    \"email\": \"vampeta8@gmail.com\",\r\n    \"dataNascimento\": \"1974-03-13\",\r\n    \"totalPartidas\": 2,\r\n    \"percentualVitorias\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"jogador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogador] Excluir por id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"jogador",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogador] Consultar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"jogador",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Login] Autenticar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"ronaldinho10@gmail.com\",\r\n    \"senha\": \"ronaldinho10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/login/autenticar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"login",
+						"autenticar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Jogador] Consultar todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/jogador/todos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"jogador",
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carta] Cadastrar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Darth Vader\",\r\n    \"inteligencia\": 3,\r\n    \"forca\": 5,\r\n    \"velocidade\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"carta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carta] Atualizar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"nome\": \"Anakin Skywalker\",\r\n    \"inteligencia\": 1,\r\n    \"forca\": 3,\r\n    \"velocidade\": 4,\r\n    \"dataCadastro\": \"2024-03-06\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"carta"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carta] Excluir por id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carta/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"carta",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carta] Consultar por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/carta/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"carta",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carta] Consultar todas",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "sessionId",
+						"value": "ce9aae58-64fa-4afb-999f-2984113907e8",
+						"type": "text"
+					},
+					{
+						"key": "login",
+						"value": "ronaldinho10@gmail.com",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/restrito/carta/todas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"restrito",
+						"carta",
+						"todas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
