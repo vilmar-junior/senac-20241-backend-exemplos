@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import model.entity.enums.vemnox1.Resultado;
@@ -168,6 +167,31 @@ public class PartidaRepository implements BaseRepository<Partida> {
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao consultar todas as partidas");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return partidas;
+	}
+	
+	public ArrayList<Partida> consultarPartidasDoJogador(Integer idJogador) {
+		ArrayList<Partida> partidas = new ArrayList<>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT * FROM partida where id_jogador = " + idJogador;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()){
+				Partida partida = converterDoResultSet(resultado);
+				partidas.add(partida);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar as partidas do jogador #" + idJogador);
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

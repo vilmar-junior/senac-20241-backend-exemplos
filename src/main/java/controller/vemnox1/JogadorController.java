@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.MediaType;
 import model.entity.vemnox1.Jogador;
 import service.vemnox1.JogadorService;
 
-@Path("/jogador")
+@Path("/restrito/jogador")
 public class JogadorController {
 	
 	private JogadorService service = new JogadorService();

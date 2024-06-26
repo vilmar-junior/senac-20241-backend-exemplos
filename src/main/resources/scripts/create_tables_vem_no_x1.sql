@@ -52,3 +52,9 @@ CREATE table if not EXISTS exemplos.CARTA_PARTIDA (
 
 --V2
 ALTER TABLE exemplos.partida MODIFY COLUMN `DATA` TIMESTAMP NOT NULL;
+
+--V3: login
+ALTER TABLE exemplos.jogador ADD senha varchar(255) NULL COMMENT 'Senha cifrada';
+ALTER TABLE exemplos.jogador ADD perfil_acesso VARCHAR(255) DEFAULT 'JOGADOR' NOT NULL COMMENT 'JOGADOR, ADMINISTRADOR';
+ALTER TABLE exemplos.jogador ADD id_sessao varchar(255) NULL;
+
