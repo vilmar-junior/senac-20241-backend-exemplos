@@ -24,7 +24,10 @@ public class LoginService {
 		
 		Jogador jogadorAutenticado = repository.consultarPorLoginSenha(usuarioDTO);
 		
-		//Inclui o uuid de sessão --> TODO revisar (criar por session ou salvar no em coluna no banco?)
+		if(jogadorAutenticado == null) {
+			throw new VemNoX1Exception("Login ou senha inválidos, tente novamente");
+		}
+
 		String idSessao = UUID.randomUUID().toString();
 		jogadorAutenticado.setIdSessao(idSessao);
 		repository.alterarIdSessao(jogadorAutenticado);
@@ -32,8 +35,8 @@ public class LoginService {
 		return jogadorAutenticado;
 	}
 
-	public boolean chaveValida(String idSessao, String login) {
-		Jogador jogador = this.repository.consultarPorLogin(login);
+	public boolean chaveValida(String idSessao) {
+		Jogador jogador = this.repository.consultarPorIdSessao(idSessao);
 
 		return jogador != null 
 				&& jogador.getIdSessao() != null

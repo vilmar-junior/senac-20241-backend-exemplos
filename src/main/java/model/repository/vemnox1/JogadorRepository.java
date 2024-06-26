@@ -193,7 +193,7 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 		Statement stmt = Banco.getStatement(conn);
 		
 		ResultSet resultado = null;
-		Jogador jogador = new Jogador();
+		Jogador jogador = null;
 		String query = " SELECT * FROM jogador "
 				     + " WHERE email = '" + usuarioDTO.getLogin() + "'"
 				     + " AND senha = '" + StringUtils.cifrar(usuarioDTO.getSenha()) + "'";
@@ -228,6 +228,30 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 			}
 		} catch (SQLException erro){
 			System.out.println("Erro ao consultar jogador com login (" + login + ")");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return jogador;
+	}
+
+	public Jogador consultarPorIdSessao(String idSessao) {
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		Jogador jogador = new Jogador();
+		String query = " SELECT * FROM jogador "
+				     + " WHERE id_sessao = '" + idSessao + "'";
+		try{
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()){
+				jogador = this.converterResultSetParaJogador(resultado);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar jogador com idSessao (" + idSessao + ")");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

@@ -3,6 +3,8 @@ package controller.vemnox1;
 import java.util.List;
 
 import exception.VemNoX1Exception;
+import filter.AuthFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -11,15 +13,19 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.vemnox1.Carta;
 import model.seletor.vemnox1.CartaSeletor;
 import service.vemnox1.CartaService;
 
-@Path("/restrito/carta")
+@Path("/carta")
 public class CartaController {
 	
 	private CartaService service = new CartaService();
+	
+	@Context
+	private HttpServletRequest request;
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -53,6 +59,9 @@ public class CartaController {
 	@Path("/todas")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Carta> consultarTodas(){
+		String header = request.getHeader(AuthFilter.CHAVE_ID_SESSAO);
+		
+		System.err.println(header);
 		return service.consultarTodas();
 	}
 	

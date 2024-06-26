@@ -38,4 +38,9 @@ public class JogadorService {
 	public List<Jogador> consultarTodas() {
 		return repository.consultarTodos();
 	}
+
+
+	public Jogador consultarPorIdSessao(String idSessaoNoHeader) {
+		return this.repository.consultarPorIdSessao(idSessaoNoHeader);
+	}
 }

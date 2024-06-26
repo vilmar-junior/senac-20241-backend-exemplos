@@ -283,4 +283,8 @@ public class PartidaService {
 				return 0;
 		}
 	}
+
+	public List<Partida> consultarPartidasDoJogador(int id) {
+		return this.partidaRepository.consultarPartidasDoJogador(id);
+	}
 }
