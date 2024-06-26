@@ -19,7 +19,7 @@ import model.entity.vemnox1.Carta;
 import model.seletor.vemnox1.CartaSeletor;
 import service.vemnox1.CartaService;
 
-@Path("/carta")
+@Path("/restrito/carta")
 public class CartaController {
 	
 	private CartaService service = new CartaService();

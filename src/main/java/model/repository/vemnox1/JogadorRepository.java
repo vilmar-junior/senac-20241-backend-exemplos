@@ -41,7 +41,8 @@ public class JogadorRepository implements BaseRepository<Jogador> {
 		return novoJogador;
 	}
 
-	private void preencherParametrosParaInsertOuUpdate(PreparedStatement pstmt, Jogador novoJogador) throws SQLException {
+	private void preencherParametrosParaInsertOuUpdate(PreparedStatement pstmt, 
+			Jogador novoJogador) throws SQLException {
 		pstmt.setString(1, novoJogador.getNome());
 		pstmt.setString(2, novoJogador.getEmail());
 		pstmt.setString(3, StringUtils.cifrar(novoJogador.getSenha()));

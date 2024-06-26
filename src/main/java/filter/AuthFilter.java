@@ -23,7 +23,6 @@ public class AuthFilter implements ContainerRequestFilter{
 	
 	private LoginService loginService = new LoginService();
 	
-
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		UriInfo url = requestContext.getUriInfo();

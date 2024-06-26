@@ -30,22 +30,6 @@ public class PartidaController {
 	private PartidaService service = new PartidaService();
 	private JogadorService jogadorService = new JogadorService();
 	
-	@Path("/iniciar/{idJogador}")
-	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public PartidaDTO iniciarPartida(@PathParam("idJogador") int idJogador) throws VemNoX1Exception{
-		return service.iniciarPartida(idJogador);
-	}
-	
-	@Path("/jogar")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public PartidaDTO jogar(JogadaDTO jogada) throws VemNoX1Exception{
-		return service.jogar(jogada);
-	}
-	
 	/**
 	 * Lista todas as partidas de um jogador, dado o seu id.
 	 * @param id do jogador
@@ -58,9 +42,7 @@ public class PartidaController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Partida> consultarPartidasDoJogador(@PathParam("id") int id) throws VemNoX1Exception{
-		
 		String idSessaoNoHeader = request.getHeader(AuthFilter.CHAVE_ID_SESSAO);
-		
 		if(idSessaoNoHeader == null || idSessaoNoHeader.isEmpty()) {
 			throw new VemNoX1Exception("Usuário sem permissão (idSessao não informado)");
 		}
@@ -77,5 +59,21 @@ public class PartidaController {
 		}
 		
 		return this.service.consultarPartidasDoJogador(id);
+	}
+	
+	@Path("/iniciar/{idJogador}")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public PartidaDTO iniciarPartida(@PathParam("idJogador") int idJogador) throws VemNoX1Exception{
+		return service.iniciarPartida(idJogador);
+	}
+	
+	@Path("/jogar")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public PartidaDTO jogar(JogadaDTO jogada) throws VemNoX1Exception{
+		return service.jogar(jogada);
 	}
 }
