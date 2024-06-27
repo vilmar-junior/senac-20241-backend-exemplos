@@ -335,17 +335,15 @@
 		},
 		{
 			"name": "[Carta] Consultar todas",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
 				"method": "GET",
 				"header": [
 					{
-						"key": "sessionId",
-						"value": "ce9aae58-64fa-4afb-999f-2984113907e8",
-						"type": "text"
-					},
-					{
-						"key": "login",
-						"value": "ronaldinho10@gmail.com",
+						"key": "idSessao",
+						"value": "8d7b4787-6f82-4109-b36b-7c089ad1dfc8",
 						"type": "text"
 					}
 				],
@@ -362,6 +360,74 @@
 						"restrito",
 						"carta",
 						"todas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Carta] Consultar com seletor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "idSessao",
+						"value": "92e498c6-c69e-4516-93ad-527a364cd27c",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/restrito/carta/filtrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"restrito",
+						"carta",
+						"filtrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[Partida] Consultar por idJogador",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "idSessao",
+						"value": "cb030ee5-1fb0-4668-8fef-8fa629bf0dc5",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/senac-20241-backend-exemplos/rest/restrito/partida/por-jogador/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"senac-20241-backend-exemplos",
+						"rest",
+						"restrito",
+						"partida",
+						"por-jogador",
+						"5"
 					]
 				}
 			},
